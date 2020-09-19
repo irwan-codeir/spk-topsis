@@ -1,0 +1,57 @@
+body {
+  font-family: Montserrat;
+}
+
+/* navbar */
+/* .navbar {
+  box-shadow: 0 0 2px;
+  /* border: 0 0 1px solid #707070; */
+.navbar {
+  width: 100%;
+}
+.navbar .navbar-brand img {
+  position: absolute;
+  z-index: 1;
+  margin-top: -37px;
+}
+.navbar-nav .nav-item a {
+  color: #534242 !important;
+  font-size: 20px;
+  font-weight: 400;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.navbar-nav .nav-item a:hover {
+  color: #ffffff !important;
+  font-weight: 400;
+}
+
+.content {
+  box-shadow: 0 0 10px;
+}
+.bg-jumbotron h3 {
+  font-size: 14px;
+  color: #707070;
+  text-align: center;
+}
+
+/* Caption */
+.caption h3,
+p {
+  font-family: lora;
+  font-weight: 400;
+  color: #707070;
+}
+
+/* kategori */
+.kategori {
+  height: 350px;
+}
+
+/* footer */
+footer {
+  border-top: 1px solid #eaeaea;
+}
+footer span {
+  color: blue;
+}
