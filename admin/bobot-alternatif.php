@@ -22,7 +22,7 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
                     <!-- <h4 class="page-title pull-left">Data</h4> -->
                     <ul class="breadcrumbs pull-left">
                         <li><a href="index.html">Home</a></li>
-                        <li><span>Data Alternatif</span></li>
+                        <li><span>Bobot Alternatif</span></li>
                     </ul>
                 </div>
             </div>
@@ -45,7 +45,7 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
     <div class="col-12 mt-2">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title text-center">Data Alternatif</h4>
+                <h4 class="header-title text-center">Bobot Alternatif</h4>
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
                     Input
                 </button>
@@ -64,8 +64,11 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Kode</th>
-                                    <th scope="col">Alternatif</th>
-                                    <th scope="col">Web Dealer</th>
+                                    <th scope="col">K01</th>
+                                    <th scope="col">K02</th>
+                                    <th scope="col">K03</th>
+                                    <th scope="col">K04</th>
+                                    <th scope="col">K05</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -77,6 +80,9 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
                                         <td><?= $alt['kode_alt']; ?></td>
                                         <td><?= $alt['k01']; ?></td>
                                         <td><?= $alt['k02']; ?></td>
+                                        <td><?= $alt['k03']; ?></td>
+                                        <td><?= $alt['k04']; ?></td>
+                                        <td><?= $alt['k05']; ?></td>
                                         <td>
                                             <a href="edit.php?id=<?= $alt['id_alt']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#checkoutModal">Edit</a>
                                             <a href="hapus.php?id=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
