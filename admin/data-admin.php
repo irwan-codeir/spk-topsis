@@ -5,7 +5,37 @@
 
 require '../functions.php';
 
-$admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
+// $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
+// membuat pagination
+// konfigurasi
+$jumlahDataPerhalaman = 4;
+// $result = mysqli_query($conn, "SELECT * FROM karyawan");
+// $jumlahData = mysqli_num_rows($result);
+$jumlahData = count(query("SELECT * FROM tbl_admin"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+// if (isset($_GET["halaman"])) {
+// 	$halamanAktif = $_GET["halaman"];
+// } else {
+// 	$halamanAktif = 1;
+// }
+// if else ternary
+$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+// halaman aktif adalah hal 2, maka awal data = 4
+// halaman aktif adalah hal 3, maka awal data = 8
+$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+
+$admin = mysqli_query($conn, "SELECT * FROM tbl_admin LIMIT $awalData, $jumlahDataPerhalaman");
+
+// jika tombol cari diklik
+if (isset($_POST['cari'])) {
+    $admin = cari($_POST['keyword']);
+
+    // alur form search, setelah form pencarian dibuat, buat alur pencariannya
+    // jika user masukan pencarian atau ketik keyword lalu mengklik tombol cari
+    // maka akan dikirim ke function cari() di file functions.php
+    // di function cari() buat query "SELECT * FROM nama_tabel WHERE field" untuk mengolah data yg di kirim dari ketikan input pencarian
+    // kembalikan atau return variabel $query ke dalam function query yg sudah dibuat
+}
 
 ?>
 
@@ -44,12 +74,12 @@ $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title text-center">Data Admin</h4>
-                <a name="" id="" class="btn btn-primary btn-sm float-left" href="#" role="button">Input</a>
+                <a name="" id="" class="btn btn-primary btn-sm float-left" href="tambah-data-admin.php" role="button">Input</a>
                 <form class="form-group float-right" action="" method="get">
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" name="keyword" class="form-control" placeholder="Search" autofocus autocomplete="off">
                         <div class="input-group-append">
-                            <button class="btn btn-transparent" type="submit">Go</button>
+                            <button class="btn btn-transparent" type="submit" name="cari">Go</button>
                         </div>
                     </div>
                 </form>
@@ -67,19 +97,19 @@ $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 0; ?>
+                                <?php $i = 1; ?>
                                 <?php foreach ($admin as $adm) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $adm['nama']; ?></td>
                                         <td><?= $adm['username']; ?></td>
-                                        <td><?= $adm['pasword']; ?></td>
+                                        <td><?= $adm['password']; ?></td>
                                         <td>
                                             asd<img src="assets/img/<?= $adm['image']; ?>" alt="">
                                         </td>
                                         <td>
-                                            <a href="edit.php?"><i class="fas fa-edit"></i>Edit</a>
-                                            <a href="edit.php?"><i class="fas fa-trash-alt"></i>Hapus</a>
+                                            <a href="edit-data-admin.php?id=<?= $adm['id']; ?>"><i class="fas fa-edit"></i>Edit</a>
+                                            <a href="hapus-data-admin.php?id=<?= $adm['id']; ?>"><i class="fas fa-trash-alt"></i>Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

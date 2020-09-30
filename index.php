@@ -1,81 +1,101 @@
 <?php include "template/header.php"; ?>
 <?php include "template/navbar.php"; ?>
 
+<?php
+require "functions.php";
+
+$pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
+
+if (isset($_POST['submit'])) {
+    if (tambah_pengunjung($_POST) > 0) {
+        // redirect dan alert dari javascript
+        echo "
+			<script>
+				alert('Kriteria berhasil diinput');
+				document.location.href = 'lihat-rekomendasi.php';
+			</script>
+		";
+        // header('Location: index.php'); ini redirect dari php
+    } else {
+        echo "
+			<script>
+				alert('Kriteria gagal diinput, Coba Ulangi!');
+				document.location.href = 'index.php';
+			</script>
+		";
+    }
+}
+
+?>
+
 <div class="container">
     <div class="row content mb-5">
         <div class="col-9 bg-jumbotron" style="background-image: url('assets/img/car.png');">
 
         </div>
-        <div class="col-3 bg-jumbotron mt-2 text-center">
-            <div>
-                <h3>Dapatkan Rekomendasi Mobil MPV <br>terbaik, dengan mengisi form dibawah <br>ini!</h3>
-                <form action="">
-                    <div class="form-group">
-                        <input type="text" name="nama" id="nama" class="form-control form-control-sm" placeholder="Nama" aria-describedby="helpId">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" id="alamat" class="form-control form-control-sm" placeholder="E-mail" aria-describedby="helpId">
-                    </div>
-                    <button type="submit" class="btn btn-block btn-warning text-white">Kirim</button>
-
-                </form>
-            </div>
-            <div class="mt-3 mb-3">
+        <div class="col-3 bg-jumbotron mt-3 mb-5 text-center">
+            <h3>Dapatkan Rekomendasi Mobil MPV <br>terbaik, dengan mengisi form dibawah <br>ini!</h3>
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="text" name="nama" id="nama" class="form-control form-control-sm" placeholder="Nama" autofocus autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control form-control-sm" placeholder="E-mail" autocomplete="off">
+                </div>
                 <h3>Silahkan pilih kriteria mobil MPV<br>yang anda inginkan :</h3>
-                <form action="">
-                    <div class="form-group">
-                        <select id="harga" class="form-control form-control-sm">
-                            <option selected>-- Pilih Harga --</option>
-                            <option>=> 290 juta</option>
-                            <option>200 juta s/d 289 juta</option>
-                            <option>140 juta s/d 199 juta</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="bbm" class="form-control form-control-sm">
-                            <option selected>-- Pilih BBM --</option>
-                            <option>8km s/d 10km</option>
-                            <option>11km s/d 12km</option>
-                            <option>12km s/d 17km</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="kenyamanan" class="form-control form-control-sm">
-                            <option selected>-- Pilih Kenyamanan --</option>
-                            <option>Rate 4 - 4,4</option>
-                            <option>Rate 4,5 - 4,7</option>
-                            <option>Rate => 4,8</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="kapasitas" class="form-control form-control-sm">
-                            <option selected>-- Pilih Kapasitas Penumpang --</option>
-                            <option>7 Orang</option>
-                            <option>8 Orang</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="mesin" class="form-control form-control-sm">
-                            <option selected>-- Pilih Mesin --</option>
-                            <option>1300 - 1350cc</option>
-                            <option>1360 - 1460cc</option>
-                            <option>1462 - 2499cc</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="harga" class="form-control form-control-sm">
-                            <option selected>-- Pilih Warna --</option>
-                            <option>Putih</option>
-                            <option>Hitam</option>
-                            <option>Warna Lain</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-block btn-warning text-white rounded" data-toggle="modal" data-target="#sendModal">Lihat Rekomendasi</button>
-                </form>
-            </div>
+                <div class="form-group">
+                    <select id="harga" class="form-control form-control-sm">
+                        <option selected>-- Pilih Harga --</option>
+                        <option value="1">=> 290 juta</option>
+                        <option value="3">200 juta s/d 289 juta</option>
+                        <option value="5">140 juta s/d 199 juta</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="bbm" class="form-control form-control-sm">
+                        <option selected>-- Pilih BBM --</option>
+                        <option value="1">8km s/d 10km</option>
+                        <option value="3">11km s/d 12km</option>
+                        <option value="5">12km s/d 17km</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="kenyamanan" class="form-control form-control-sm">
+                        <option selected>-- Pilih Kenyamanan --</option>
+                        <option value="1">Rate 4 - 4,4</option>
+                        <option value="3">Rate 4,5 - 4,7</option>
+                        <option value="5">Rate => 4,8</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="kapasitas" class="form-control form-control-sm">
+                        <option selected>-- Pilih Kapasitas Penumpang --</option>
+                        <option value="3">7 Orang</option>
+                        <option value="5">8 Orang</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="mesin" class="form-control form-control-sm">
+                        <option selected>-- Pilih Mesin --</option>
+                        <option value="1">1300 - 1350cc</option>
+                        <option value="3">1360 - 1460cc</option>
+                        <option value="5">1462 - 2499cc</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="harga" class="form-control form-control-sm">
+                        <option selected>-- Pilih Warna --</option>
+                        <option value="1">Putih</option>
+                        <option value="3">Hitam</option>
+                        <option value="5">Warna Lain</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-block btn-warning text-white rounded mt-4" data-toggle="modal" data-target="#sendModal">Lihat Rekomendasi</button>
+            </form>
         </div>
     </div>
 </div>
+
 
 <section class="caption mt-5 mb-5">
     <div class="container">

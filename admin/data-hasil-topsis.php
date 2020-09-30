@@ -1,6 +1,7 @@
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
+
 <div class="main-content">
     <!-- header area start -->
     <!-- page-title -->
@@ -56,15 +57,53 @@
                                     <td>hjsd</td>
                                     <td>
                                         <ul class="text-left">
-                                            <li scope="col">BBM : 4</li>
-                                            <li scope="col">Kenyaman</li>
-                                            <li scope="col">Penumpang</li>
-                                            <li scope="col">Mesin</li>
+                                            <li scope="col">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        Harga
+                                                    </div>
+                                                    <div class="col">
+                                                        : 4
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        BBM
+                                                    </div>
+                                                    <div class="col">
+                                                        : 4
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        Kenyaman
+                                                    </div>
+                                                    <div class="col">
+                                                        : 4
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        Penumpang
+                                                    </div>
+                                                    <div class="col">
+                                                        : 4
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        Mesin
+                                                    </div>
+                                                    <div class="col">
+                                                        : 4
+                                                    </div>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </td>
                                     <td>
                                         <ul class="d-flex justify-content-center">
-                                            <li><a href="detail.php?id=<?= $hasil['id']; ?>" class="text-danger"><i class="fa fa-eye"></i></a></li>
+                                            <li><a href="detail-hasil-topsis.php" class="text-danger"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -78,4 +117,6 @@
     </div>
     <!-- data admin Table end -->
 </div>
+
+
 <?php include "template/footer.php"; ?>

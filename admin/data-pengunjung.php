@@ -5,7 +5,7 @@
 
 require '../functions.php';
 
-$admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
+$view = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
 
 ?>
 
@@ -43,16 +43,21 @@ $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
     <div class="col-12 mt-2">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title text-center">Data Pengunjung</h4>
-                <a name="" id="" class="btn btn-primary btn-sm float-left" href="#" role="button">Input</a>
-                <form class="form-group float-right" action="" method="get">
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-transparent" type="submit">Go</button>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6 mt-2">
+                        <h4 class="header-title d-flex align-self-center">Data Pengunjung</h4>
                     </div>
-                </form>
+                    <div class="col-md-6">
+                        <form class="form-group float-right" action="" method="get">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-transparent" type="submit">Go</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="single-table mt-2">
                     <div class="table-responsive">
                         <table class="table table-hover progress-table text-center">
@@ -60,27 +65,16 @@ $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Password</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Email</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 0; ?>
-                                <?php foreach ($admin as $adm) : ?>
+                                <?php foreach ($view as $v) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
-                                        <td><?= $adm['nama']; ?></td>
-                                        <td><?= $adm['username']; ?></td>
-                                        <td><?= $adm['pasword']; ?></td>
-                                        <td>
-                                            asd<img src="assets/img/<?= $adm['image']; ?>" alt="">
-                                        </td>
-                                        <td>
-                                            <a href="edit.php?"><i class="fas fa-edit"></i>Edit</a>
-                                            <a href="edit.php?"><i class="fas fa-trash-alt"></i>Hapus</a>
-                                        </td>
+                                        <td><?= $v['nama']; ?></td>
+                                        <td><?= $v['email']; ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

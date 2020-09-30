@@ -1,14 +1,33 @@
+<?php
+
+include '../functions.php';
+
+$alternatif = mysqli_query($conn, "SELECT * FROM alternatif");
+
+if (isset($_POST['submit'])) {
+    if (tambah_alternatif($_POST) > 0) {
+        // redirect dan alert dari javascript
+        echo "
+			<script>
+				alert('data berhasil ditambah');
+				document.location.href = 'data-alternatif.php';
+			</script>
+		";
+        // header('Location: index.php'); ini redirect dari php
+    } else {
+        echo "
+			<script>
+				alert('data gagal ditambah');
+				document.location.href = 'data-alternatif.php';
+			</script>
+		";
+    }
+}
+
+?>
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
-<?php
-
-require '../functions.php';
-
-$alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
-
-
-?>
 
 
 <div class="main-content">
@@ -41,12 +60,12 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
     </div>
     <!-- end page-title -->
 
-    <!-- data admin -->
+    <!-- data alternatif -->
     <div class="col-12 mt-2">
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title text-center">Data Alternatif</h4>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
+                <button type="button" name="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
                     Input
                 </button>
                 <form class="form-group float-right" action="" method="get">
@@ -59,12 +78,13 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
                 </form>
                 <div class="single-table mt-3">
                     <div class="table-responsive">
-                        <table class="table table-hover progress-table text-center">
+                        <table class="table table-hover progress-table">
                             <thead class="text-uppercase">
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Kode</th>
-                                    <th scope="col">Alternatif</th>
+                                    <th scope="col">Nama Alternatif</th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Web Dealer</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -74,12 +94,13 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
                                 <?php foreach ($alternatif as $alt) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
-                                        <td><?= $alt['kode_alt']; ?></td>
-                                        <td><?= $alt['k01']; ?></td>
-                                        <td><?= $alt['k02']; ?></td>
+                                        <td><?= $alt['kode']; ?></td>
+                                        <td><?= $alt['alternatif']; ?></td>
+                                        <td><?= $alt['image']; ?></td>
+                                        <td><?= $alt['dealer']; ?></td>
                                         <td>
-                                            <a href="edit.php?id=<?= $alt['id_alt']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#checkoutModal">Edit</a>
-                                            <a href="hapus.php?id=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
+                                            <a href="edit.php?id=<?= $alt['id']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
+                                            <a href="hapus.php?id=<?= $alt['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -93,8 +114,7 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
     <!-- data admin Table end -->
 </div>
 
-<!-- modal tambah -->
-<!-- Modal -->
+<!-- modal tambah alternatif -->
 <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -107,12 +127,74 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-10 offset-1">
-                        <form action="./functions.php?act=tambah_alt" method="post">
+                        <form action="" method="post">
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
+                                        <label for="exampleFormControlInput1">Kode</label>
+                                        <input type="text" class="form-control" name="kode" placeholder="cth: A01" required autofocus autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Nama Alternatif</label>
+                                        <input type="text" class="form-control" name="alternatif" placeholder="" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label for="">Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customFile" name="image">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Dealer</label>
+                                        <input type="text" class="form-control" name="dealer" placeholder="" required>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="submit" class="btn btn-primary">Tambah Data</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- modal edit alternatif -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Alternatif</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10 offset-1">
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="hidden" name="id_alt">
+                                    <div class="form-group">
                                         <label for="exampleFormControlInput1">Kode Alt</label>
-                                        <input type="text" class="form-control" name="kode_alt" placeholder="cth: A01" required autofocus>
+                                        <input type="text" class="form-control" name="kode_alt" placeholder="cth: A01" required autofocus autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -155,58 +237,13 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn btn-primary" name="submit" value="Simpan">
+                <button type="submit" class="btn btn-primary" name="submit" value="Simpan">Simpan</button>
             </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- modal edit -->
-<?php foreach ($alternatif as $data) : ?>
-
-
-    <div class="modal fade checkout-modal-success" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h3>Edit Data Alternatif</h3>
-                    <hr>
-                    <form action="/action_page.php">
-                        <input type="hidden" class="form-control name=" ide_alt" form-control-sm">
-                        <div class="form-group">
-                            <label for="kode">Kode Alternatif</label>
-                            <input type="text" name="kode_alt" class="form-control form-control-sm" placeholder="cth: A01" value="<?= $data['kode_alt']; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="k01">K01</label>
-                            <input type="number" name="k01" class="form-control form-control-sm" value="<?= $data['k01']; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="k02">K02</label>
-                            <input type="number" name="k02" class="form-control form-control-sm" value="<?= $data['k02']; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="k03">K03</label>
-                            <input type="number" name="k03" class="form-control form-control-sm" value="<?= $data['k03']; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="k04">K04</label>
-                            <input type="number" name="k04" class="form-control form-control-sm" value="<?= $data['k04']; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="k05">K05</label>
-                            <input type="number" name="k05" class="form-control form-control-sm" value="<?= $data['k05']; ?>">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endforeach; ?>
 </div>
 
 
