@@ -5,26 +5,28 @@
 
 require '../functions.php';
 
-// $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
-// membuat pagination
-// konfigurasi
-$jumlahDataPerhalaman = 4;
-// $result = mysqli_query($conn, "SELECT * FROM karyawan");
-// $jumlahData = mysqli_num_rows($result);
-$jumlahData = count(query("SELECT * FROM tbl_admin"));
-$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
-// if (isset($_GET["halaman"])) {
-// 	$halamanAktif = $_GET["halaman"];
-// } else {
-// 	$halamanAktif = 1;
-// }
-// if else ternary
-$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
-// halaman aktif adalah hal 2, maka awal data = 4
-// halaman aktif adalah hal 3, maka awal data = 8
-$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+$admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
 
-$admin = mysqli_query($conn, "SELECT * FROM tbl_admin LIMIT $awalData, $jumlahDataPerhalaman");
+
+if (isset($_POST['submit'])) {
+    if (tambah_admin($_POST) > 0) {
+        // redirect dan alert dari javascript
+        echo "
+			<script>
+				alert('data berhasil ditambah');
+				document.location.href = 'data-admin.php';
+			</script>
+		";
+        // header('Location: index.php'); ini redirect dari php
+    } else {
+        echo "
+			<script>
+				alert('data gagal ditambah');
+				document.location.href = 'data-admin.php';
+			</script>
+		";
+    }
+}
 
 // jika tombol cari diklik
 if (isset($_POST['cari'])) {
@@ -74,7 +76,9 @@ if (isset($_POST['cari'])) {
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title text-center">Data Admin</h4>
-                <a name="" id="" class="btn btn-primary btn-sm float-left" href="tambah-data-admin.php" role="button">Input</a>
+                <button type="button" name="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
+                    Input
+                </button>
                 <form class="form-group float-right" action="" method="get">
                     <div class="input-group mb-2">
                         <input type="text" name="keyword" class="form-control" placeholder="Search" autofocus autocomplete="off">
@@ -89,10 +93,10 @@ if (isset($_POST['cari'])) {
                             <thead class="text-uppercase">
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Username</th>
                                     <th scope="col">Password</th>
-                                    <th scope="col">Image</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -101,15 +105,15 @@ if (isset($_POST['cari'])) {
                                 <?php foreach ($admin as $adm) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
+                                        <td>
+                                            <img src="assets/img/<?= $adm['image']; ?>" alt="">
+                                        </td>
                                         <td><?= $adm['nama']; ?></td>
                                         <td><?= $adm['username']; ?></td>
                                         <td><?= $adm['password']; ?></td>
                                         <td>
-                                            asd<img src="assets/img/<?= $adm['image']; ?>" alt="">
-                                        </td>
-                                        <td>
-                                            <a href="edit-data-admin.php?id=<?= $adm['id']; ?>"><i class="fas fa-edit"></i>Edit</a>
-                                            <a href="hapus-data-admin.php?id=<?= $adm['id']; ?>"><i class="fas fa-trash-alt"></i>Hapus</a>
+                                            <a href="edit-data-admin.php?id=<?= $adm['id']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
+                                            <a href="hapus-admin.php?id=<?= $adm['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -123,4 +127,52 @@ if (isset($_POST['cari'])) {
     <!-- data admin Table end -->
 </div>
 
-<?php include "template/footer.php"; ?>
+<!-- modal tambah admin -->
+<div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Alternatif</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10 offset-1">
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="">Nama</label>
+                                        <input type="text" name="nama" id="" class="form-control form-control-sm" autofocus autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Username</label>
+                                        <input type="text" name="username" id="" class="form-control form-control-sm" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Password</label>
+                                        <input type="password" name="password" id="" class="form-control form-control-sm" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="image" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="submit" class="btn btn-primary">Tambah Data</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <?php include "template/footer.php"; ?>

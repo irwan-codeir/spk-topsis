@@ -129,13 +129,13 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
 <h3>Normalisasi terbobot</h3>
 <?php
 
-$kriteria = mysqli_query($conn, "SELECT * FROM kriteria");
+$kriteria = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
 foreach ($kriteria as $k) {
-	$kriteria1 = $k['harga'];
-	$kriteria2 = $k['bbm'];
-	$kriteria3 = $k['kenyamanan'];
-	$kriteria4 = $k['jml_penumpang'];
-	$kriteria5 = $k['mesin'];
+	$kriteria1 = $k['k01'];
+	$kriteria2 = $k['k02'];
+	$kriteria3 = $k['k03'];
+	$kriteria4 = $k['k04'];
+	$kriteria5 = $k['k05'];
 }
 
 ?>

@@ -60,7 +60,7 @@ $view = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
                 </div>
                 <div class="single-table mt-2">
                     <div class="table-responsive">
-                        <table class="table table-hover progress-table text-center">
+                        <table class="table table-hover progress-table">
                             <thead class="text-uppercase">
                                 <tr>
                                     <th scope="col">No</th>
@@ -69,7 +69,7 @@ $view = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 0; ?>
+                                <?php $i = 1; ?>
                                 <?php foreach ($view as $v) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>

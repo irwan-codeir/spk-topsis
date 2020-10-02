@@ -1,6 +1,12 @@
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
+<?php
+require "../functions.php";
+
+$pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
+
+?>
 
 <div class="main-content">
     <!-- header area start -->
@@ -39,7 +45,7 @@
                 <h4 class="header-title">Data Hasil Topsis</h4>
                 <div class="single-table">
                     <div class="table-responsive">
-                        <table class="table table-hover progress-table text-center">
+                        <table class="table table-hover progress-table">
                             <thead class="text-uppercase">
                                 <tr>
                                     <th scope="col">No</th>
@@ -51,63 +57,65 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>hjsd</td>
-                                    <td>
-                                        <ul class="text-left">
-                                            <li scope="col">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        Harga
+                                <?php $i = 1; ?>
+                                <?php foreach ($pengunjung as $hsl) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $i++; ?></th>
+                                        <td><?= $hsl['nama']; ?></td>
+                                        <td><?= $hsl['email']; ?></td>
+                                        <td>
+                                            <ul class="text-left">
+                                                <li scope="col">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            Harga
+                                                        </div>
+                                                        <div class="col">
+                                                            : <?= $hsl['k01']; ?>
+                                                        </div>
                                                     </div>
-                                                    <div class="col">
-                                                        : 4
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            BBM
+                                                        </div>
+                                                        <div class="col">
+                                                            : <?= $hsl['k02']; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        BBM
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            Kenyaman
+                                                        </div>
+                                                        <div class="col">
+                                                            : <?= $hsl['k03']; ?>
+                                                        </div>
                                                     </div>
-                                                    <div class="col">
-                                                        : 4
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            Penumpang
+                                                        </div>
+                                                        <div class="col">
+                                                            : <?= $hsl['k04']; ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        Kenyaman
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            Mesin
+                                                        </div>
+                                                        <div class="col">
+                                                            : <?= $hsl['k05']; ?>
+                                                        </div>
                                                     </div>
-                                                    <div class="col">
-                                                        : 4
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        Penumpang
-                                                    </div>
-                                                    <div class="col">
-                                                        : 4
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        Mesin
-                                                    </div>
-                                                    <div class="col">
-                                                        : 4
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <ul class="d-flex justify-content-center">
-                                            <li><a href="detail-hasil-topsis.php" class="text-danger"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </td>
-                                </tr>
-
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="d-flex justify-content-center">
+                                                <li><a href="detail-hasil-topsis.php?id=<?= $hsl['id']; ?>" class="text-danger"><i class="fa fa-eye"></i></a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>

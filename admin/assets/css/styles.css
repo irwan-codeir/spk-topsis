@@ -2844,6 +2844,34 @@ table.dataTable thead td {
 }
 
 .card-body p {
-  color: #2c3cb7;
+  color: #2c3cb7 !important;
   font-weight: 600;
+}
+
+/* login */
+.login {
+  color: #000000;
+}
+.login h5 {
+  color: #171717;
+  font-size: 28px;
+  font-weight: 600;
+  padding-top: 30px;
+  text-align: center;
+  text-shadow: 0 0 1px rgb(8, 35, 51);
+}
+.login .form {
+  width: 450px;
+  height: 350px;
+  background-color: white;
+  margin-top: 50px;
+  color: #171717;
+  border: 1px #171717 solid;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgb(8, 8, 9);
+}
+.form form {
+  padding-top: 20px;
+  padding-left: 80px;
+  padding-right: 80px;
 }

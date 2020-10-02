@@ -188,15 +188,16 @@ function tambah_admin($data)
 {
 	global $conn;
 
-	$nama = htmlspecialchars($data['nama']);
-	$username = htmlspecialchars($data['username']);
-	$password = htmlspecialchars($data['password']);
-	$image = htmlspecialchars($data['image']);
+	$nama = htmlspecialchars($data["nama"]);
+	$username = strtolower(stripslashes($data["username"]));
+	$password = mysqli_real_escape_string($conn, $data["password"]);
+	$enkripsipassword = password_hash($password, PASSWORD_DEFAULT);
+	$image = $data["image"];
 
 	// query insert data
-	$query = "INSERT INTO tbl_alternatif
+	$query = "INSERT INTO tbl_admin
 				VALUES
-				('','$nama','$username','$password','$image')
+				('','$nama','$username','$enkripsipassword','$image')
 				";
 	mysqli_query($conn, $query);
 
@@ -318,7 +319,6 @@ function hapus_admin($id)
 	// dan -1 data tidak ada perubahan data
 	return mysqli_affected_rows($conn);
 }
-
 
 function cari_admin($keyword)
 {

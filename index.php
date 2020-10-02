@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <h3>Silahkan pilih kriteria mobil MPV<br>yang anda inginkan :</h3>
                 <div class="form-group">
-                    <select id="harga" class="form-control form-control-sm">
+                    <select id="harga" class="form-control form-control-sm" name="k01">
                         <option selected>-- Pilih Harga --</option>
                         <option value="1">=> 290 juta</option>
                         <option value="3">200 juta s/d 289 juta</option>
@@ -52,15 +52,15 @@ if (isset($_POST['submit'])) {
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="bbm" class="form-control form-control-sm">
+                    <select id="bbm" class="form-control form-control-sm" name="k02">
                         <option selected>-- Pilih BBM --</option>
                         <option value="1">8km s/d 10km</option>
-                        <option value="3">11km s/d 12km</option>
+                        <option value="4">11km s/d 12km</option>
                         <option value="5">12km s/d 17km</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="kenyamanan" class="form-control form-control-sm">
+                    <select id="kenyamanan" class="form-control form-control-sm" name="k03">
                         <option selected>-- Pilih Kenyamanan --</option>
                         <option value="1">Rate 4 - 4,4</option>
                         <option value="3">Rate 4,5 - 4,7</option>
@@ -68,29 +68,30 @@ if (isset($_POST['submit'])) {
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="kapasitas" class="form-control form-control-sm">
+                    <select id="kapasitas" class="form-control form-control-sm" name="k04">
                         <option selected>-- Pilih Kapasitas Penumpang --</option>
-                        <option value="3">7 Orang</option>
+                        <option value="2">7 Orang</option>
                         <option value="5">8 Orang</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="mesin" class="form-control form-control-sm">
+                    <select id="mesin" class="form-control form-control-sm" name="k05">
                         <option selected>-- Pilih Mesin --</option>
                         <option value="1">1300 - 1350cc</option>
                         <option value="3">1360 - 1460cc</option>
                         <option value="5">1462 - 2499cc</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <select id="harga" class="form-control form-control-sm">
                         <option selected>-- Pilih Warna --</option>
                         <option value="1">Putih</option>
                         <option value="3">Hitam</option>
                         <option value="5">Warna Lain</option>
                     </select>
-                </div>
-                <button type="button" class="btn btn-block btn-warning text-white rounded mt-4" data-toggle="modal" data-target="#sendModal">Lihat Rekomendasi</button>
+                </div> -->
+                <button type="submit" name="submit" class="btn btn-block btn-warning text-white rounded mt-4">Lihat Rekomendasi</button>
+                <!-- <button type="button" class="btn btn-block btn-warning text-white rounded mt-4" data-toggle="modal" data-target="#sendModal">Lihat Rekomendasi</button> -->
             </form>
         </div>
     </div>
