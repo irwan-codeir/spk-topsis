@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "db_spk_topsis");
+$conn = mysqli_connect("localhost", "root", "", "db_topsis");
 
 function query($query)
 {
@@ -189,15 +189,15 @@ function tambah_admin($data)
 	global $conn;
 
 	$nama = htmlspecialchars($data["nama"]);
+	$image = $data["image"];
 	$username = strtolower(stripslashes($data["username"]));
 	$password = mysqli_real_escape_string($conn, $data["password"]);
 	$enkripsipassword = password_hash($password, PASSWORD_DEFAULT);
-	$image = $data["image"];
 
 	// query insert data
 	$query = "INSERT INTO tbl_admin
 				VALUES
-				('','$nama','$username','$enkripsipassword','$image')
+				('','$image','$nama','$username','$enkripsipassword')
 				";
 	mysqli_query($conn, $query);
 

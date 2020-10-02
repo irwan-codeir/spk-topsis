@@ -2,11 +2,15 @@
 <?php include "template/sidebar.php"; ?>
 
 <?php
+session_start();
+require "../functions.php";
 
-require '../functions.php';
+if(!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
 
 $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
-
 
 if (isset($_POST['submit'])) {
     if (tambah_admin($_POST) > 0) {
