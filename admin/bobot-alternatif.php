@@ -3,8 +3,13 @@
 
 <?php
 
+session_start();
 require "../functions.php";
 
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
 
 
 $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
@@ -49,11 +54,11 @@ if (isset($_POST['submit'])) {
             <div class="col-sm-6 clearfix">
                 <div class="user-profile pull-right">
                     <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Irwan <i class="fa fa-angle-down"></i></h4>
+                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $_SESSION["username"]; ?><i class="fa fa-angle-down"></i></h4>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Message</a>
                         <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Log Out</a>
+                        <a class="dropdown-item" href="logout.php">Log Out</a>
                     </div>
                 </div>
             </div>

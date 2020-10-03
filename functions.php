@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "db_topsis");
+$conn = mysqli_connect("localhost", "root", "", "db_spk_topsis");
 
 function query($query)
 {

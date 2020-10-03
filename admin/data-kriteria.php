@@ -3,7 +3,13 @@
 
 <?php
 
-require '../functions.php';
+session_start();
+require "../functions.php";
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
 
 $kriteria = mysqli_query($conn, "SELECT * FROM tbl_kriteria");
 
@@ -27,11 +33,11 @@ $kriteria = mysqli_query($conn, "SELECT * FROM tbl_kriteria");
             <div class="col-sm-6 clearfix">
                 <div class="user-profile pull-right">
                     <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Irwan <i class="fa fa-angle-down"></i></h4>
+                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $_SESSION["username"]; ?><i class="fa fa-angle-down"></i></h4>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Message</a>
                         <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Log Out</a>
+                        <a class="dropdown-item" href="logout.php">Log Out</a>
                     </div>
                 </div>
             </div>
@@ -63,7 +69,6 @@ $kriteria = mysqli_query($conn, "SELECT * FROM tbl_kriteria");
                                     <th scope="col">No</th>
                                     <th scope="col">Kode</th>
                                     <th scope="col">Nama</th>
-                                    <th scope="col">Bobot</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -74,7 +79,6 @@ $kriteria = mysqli_query($conn, "SELECT * FROM tbl_kriteria");
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $kr['kode_krt']; ?></td>
                                         <td><?= $kr['nama_krt']; ?></td>
-                                        <td><?= $kr['bobot']; ?></td>
                                         <td>
                                             <a href="edit.php?id=<?= $kr['id']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
                                             <a href="hapus.php?id=<?= $kr['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>

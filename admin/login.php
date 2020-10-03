@@ -2,8 +2,8 @@
 session_start();
 require "../functions.php";
 
-if(isset($_POST["login"])) {
-    $nama = $_SESSION["nama"];
+if (isset($_POST["login"])) {
+    // $nama = $_SESSION["nama"];
     // $nama = $_POST["image"];
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -11,12 +11,11 @@ if(isset($_POST["login"])) {
     $result = mysqli_query($conn, "SELECT * FROM tbl_admin WHERE username = '$username'");
 
     // cek username
-    if(mysqli_num_rows($result)) {
+    if (mysqli_num_rows($result)) {
         // cek password
         $row = mysqli_fetch_assoc($result);
-        if(password_verify($password, $row["password"])) {
+        if (password_verify($password, $row["password"])) {
             // set session
-            $_SESSION["nama"] = $nama;
             $_SESSION["username"] = $username;
             $_SESSION["login"] = true;
             header("Location: index.php");
@@ -62,11 +61,11 @@ if(isset($_POST["login"])) {
             <div class="col-md-12">
                 <div class="form">
                     <h5>Login Oto<span style="color: darkcyan;">Expert</span></h5>
-                    <?php if(isset($error)): ?>
-                    <div class="alert alert-danger" role="alert" style="margin-left: 80px; margin-right:80px; margin-top:5px; margin-bottom: -20px;">
-                        username/password salah!
-                    </div>
-                    <?php endif;?>
+                    <?php if (isset($error)) : ?>
+                        <div class="alert alert-danger" role="alert" style="margin-left: 80px; margin-right:80px; margin-top:5px; margin-bottom: -20px;">
+                            username/password salah!
+                        </div>
+                    <?php endif; ?>
                     <form action="" method="post">
                         <div class="form-group mt-2">
                             <label for="exampleInputEmail1">Username</label>
