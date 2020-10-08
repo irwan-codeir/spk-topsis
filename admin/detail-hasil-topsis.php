@@ -14,6 +14,8 @@ if (!isset($_SESSION["login"])) {
 
 $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
 
+// $delete = mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
+mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 
 ?>
 
@@ -51,7 +53,19 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
     <div class="col-12 mt-2">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title text-center">Data Hasil Topsis</h4>
+                <h4 class="header-title text-center">Detail Hasil Topsis</h4>
+                <!-- <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-alternatif" role="tab" aria-controls="nav-home" aria-selected="true">Nilai Alternatif</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-normalisasi" role="tab" aria-controls="nav-profile" aria-selected="false">Nilai Normalisasi</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-terbobot" role="tab" aria-controls="nav-contact" aria-selected="false">Nilai Normalisasi Terbobot</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-alternatif" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+                    <div class="tab-pane fade" id="nav-normalisasi" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                    <div class="tab-pane fade" id="nav-terbobot" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-10 offset-1">
                         <p class="mb-2">Nilai Alternatif</p>
@@ -189,8 +203,6 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
                                     <!-- menentukan max dan min -->
                                     <?php
                                     $query = mysqli_query($conn, "SELECT max(k01) as max1, min(k01) as min1, max(k02) as max2, min(k02) as min2, max(k03) as max3, min(k03) as min3, max(k04) as max4, min(k04) as min4, max(k05) as max5, min(k05) as min5 FROM tbl_alternatif");
-                                    // $test = mysqli_fetch_assoc($query);
-                                    // echo json_encode($test);
                                     ?>
 
 
@@ -358,12 +370,19 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
                             <table class="table table-sm progress-table text-center">
                                 <thead class="text-uppercase">
                                     <tr>
-                                        <th scope="col" colspan="2">Nilai Preferensi</th>
+                                        <th scope="col" colspan="3">Nilai Preferensi</th>
                                         <th scope="col">Perangkingan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1; ?>
+                                    <!-- delete isi tabel preferensi -->
+                                    <?php
+                                    // $altf = ['Avanza', 'Veloz', 'Sienta', 'Mobilio', 'Ertiga', 'Ertiga Sport', 'APV Arena', 'APV Luxury', 'Xenia', 'Xpander', 'Xpander Cross', 'Grand Livina', 'Cortez', 'Confero', 'Panther'];
+
+                                    // $kode_alt = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15'];
+
+                                    $i = 1;
+                                    ?>
                                     <?php foreach ($query as $a) : ?>
                                         <?php
                                         $maksimal1 = ($q['max1'] / sqrt($sum1)) * $kriteria1;
@@ -393,15 +412,23 @@ $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
 
                                             $pref = $dNegatif / ($dNegatif + $dPositif);
 
+                                            $query = "INSERT INTO tbl_preferensi VALUES('','','$pref')";
+                                            mysqli_query($conn, $query);
+
                                             ?>
-                                            <tr>
-                                                <td><?= $a['kode_alt']; ?></td>
-                                                <td><?= number_format(($pref), 4); ?></td>
-                                                <td>
-                                                    <?= $i++; ?>
-                                                </td>
-                                            </tr>
+
                                         <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                    <?php $preff = mysqli_query($conn, "SELECT * FROM tbl_preferensi ORDER BY pref DESC"); ?>
+                                    <?php foreach ($preff as $pref) : ?>
+                                        <tr>
+                                            <td><?= "A" . $pref['id']; ?></td>
+                                            <td><?= $pref['alternatif']; ?></td>
+                                            <td><?= $pref['pref']; ?></td>
+                                            <td>
+                                                <?= $i++; ?>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>

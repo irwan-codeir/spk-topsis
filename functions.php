@@ -333,3 +333,16 @@ function cari_admin($keyword)
 		";
 	return query($query);
 }
+
+function hapus_pref()
+{
+	global $conn;
+
+	mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
+
+	// Fungsi mysqli_affected_rows () mengembalikan jumlah baris yang terpengaruh 
+	// di SELECT, INSERT, UPDATE, REPLACE, atau DELETE query sebelumnya
+	// mysqli_affected_rows mengambil nilai berupa angka 1 brti ada data yg terpengaruh, 
+	// dan -1 data tidak ada perubahan data
+	return mysqli_affected_rows($conn);
+}

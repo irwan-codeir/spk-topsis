@@ -2,6 +2,7 @@
 <?php include "template/navbar.php"; ?>
 
 <?php
+session_start();
 require "functions.php";
 
 $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
@@ -9,6 +10,8 @@ $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
 if (isset($_POST['submit'])) {
     if (tambah_pengunjung($_POST) > 0) {
         // redirect dan alert dari javascript
+        // tampilkan hasil rekomendasi
+
         echo "
 			<script>
 				alert('Kriteria berhasil diinput');
@@ -147,9 +150,16 @@ if (isset($_POST['submit'])) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
+                <?php
+                $pref = mysqli_query($conn, "SELECT * FROM tbl_preferensi");
+
+                ?>
                 <img src="img/logo/success-checkout.png" class="mb-5">
-                <h3>Checkout Berhasil</h3>
-                <p>Anda akan mendapatkan barang anda <br>dalam beberapa hari</p>
+                <?php foreach ($pref as $pr) : ?>
+                    <h3><?= $pr['alternatif']; ?></h3>
+                    <h3><?= $pr['pref']; ?></h3>
+                    <p>Anda akan mendapatkan barang anda <br>dalam beberapa hari</p>
+                <?php endforeach; ?>
                 <a href="index.php" type="button" class="btn mt-3" data-dismiss="modal" style="background-color: #eaeaef; color:#adadad;">Home</a>
             </div>
         </div>

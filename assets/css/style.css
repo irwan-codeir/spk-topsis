@@ -15,14 +15,14 @@ body {
   margin-top: -37px;
 }
 .navbar-nav .nav-item a {
-  color: #534242 !important;
+  color: #fff !important;
   font-size: 20px;
   font-weight: 400;
   margin-left: 10px;
   margin-right: 10px;
 }
 .navbar-nav .nav-item a:hover {
-  color: #ffffff !important;
+  color: lightgreen !important;
   font-weight: 400;
 }
 
@@ -48,6 +48,17 @@ p {
   height: 350px;
 }
 
+/* contact us */
+.contact .row {
+  padding-top: 10px;
+}
+.contact h5 {
+  color: rgb(201, 185, 185) !important;
+  margin-bottom: 14px;
+}
+.contact p {
+  color: rgb(201, 185, 185) !important;
+}
 /* footer */
 footer {
   border-top: 1px solid #eaeaea;
