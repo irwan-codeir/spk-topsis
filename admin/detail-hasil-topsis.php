@@ -412,18 +412,18 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 
                                             $pref = $dNegatif / ($dNegatif + $dPositif);
 
-                                            $query = "INSERT INTO tbl_preferensi VALUES('','','$pref')";
+                                            $query = "INSERT INTO tbl_preferensi VALUES('','$pref')";
                                             mysqli_query($conn, $query);
 
                                             ?>
 
                                         <?php endforeach; ?>
                                     <?php endforeach; ?>
-                                    <?php $preff = mysqli_query($conn, "SELECT * FROM tbl_preferensi ORDER BY pref DESC"); ?>
+                                    <?php $preff = mysqli_query($conn, "SELECT id_alt, nama_alt, pref  FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id ORDER BY pref DESC"); ?>
                                     <?php foreach ($preff as $pref) : ?>
                                         <tr>
-                                            <td><?= "A" . $pref['id']; ?></td>
-                                            <td><?= $pref['alternatif']; ?></td>
+                                            <td><?= "A" . $pref['id_alt']; ?></td>
+                                            <td><?= $pref['nama_alt']; ?></td>
                                             <td><?= $pref['pref']; ?></td>
                                             <td>
                                                 <?= $i++; ?>

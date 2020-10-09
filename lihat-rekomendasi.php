@@ -61,7 +61,8 @@ foreach ($query as $a) {
 }
 
 
-$pref = mysqli_query($conn, "SELECT id, max(pref) as pre FROM tbl_preferensi");
+// $pref = mysqli_query($conn, "SELECT id, max(pref) as pre FROM tbl_preferensi"); max(pref) as pre
+$pref = mysqli_query($conn, "SELECT id_alt, nama_alt, max(pref) as pre, url, image FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id");
 
 ?>
 
@@ -70,13 +71,16 @@ $pref = mysqli_query($conn, "SELECT id, max(pref) as pre FROM tbl_preferensi");
         <div class="row">
             <div class="col">
                 <div class="card text-center d-flex align-items-center p-5">
-                    <img class="card-img-top img-thumbnail" src="assets/img/car.jpg" alt="" style="width: 500px; height: 380px;">
-                    <div class="card-body">
-                        <?php foreach ($pref as $pre) : ?>
-                            <h4 class="card-title"><?= $pre["id"]; ?></h4>
-                            <p class="card-text"><?= $pre["pre"]; ?></p>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php foreach ($pref as $pre) : ?>
+                        <img class="card-img-top img-thumbnail" src="" alt="<?= $pre["image"]; ?>" style="width: 300px; height: 180px;">
+                        <div class="card-body">
+                            <h4 class="card-title"><?= $pre["id_alt"]; ?></h4>
+                            <h4 class="card-title"><?= $pre["nama_alt"]; ?></h4>
+                            <h4 class="card-title"><?= $pre["pre"]; ?></h4>
+                            <a href="<?= $pre["url"]; ?>"></a>
+                        </div>
+                    <?php endforeach; ?>
+                    <a href="index.php" class="btn btn-success">Kembali</a>
                 </div>
             </div>
         </div>

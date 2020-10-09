@@ -7,7 +7,7 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
-$alternatif = mysqli_query($conn, "SELECT * FROM alternatif");
+$alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
 
 if (isset($_POST['submit'])) {
     if (tambah_alternatif($_POST) > 0) {
@@ -99,13 +99,13 @@ if (isset($_POST['submit'])) {
                                 <?php foreach ($alternatif as $alt) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
-                                        <td><?= $alt['kode']; ?></td>
-                                        <td><?= $alt['alternatif']; ?></td>
+                                        <td><?= $alt['kode_alt']; ?></td>
+                                        <td><?= $alt['nama_alt']; ?></td>
                                         <td><?= $alt['image']; ?></td>
-                                        <td><?= $alt['dealer']; ?></td>
+                                        <td><?= $alt['url']; ?></td>
                                         <td>
-                                            <a href="edit.php?id=<?= $alt['id']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
-                                            <a href="hapus.php?id=<?= $alt['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
+                                            <a href="edit.php?id=<?= $alt['id_alt']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
+                                            <a href="hapus-alternatif.php?id=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
