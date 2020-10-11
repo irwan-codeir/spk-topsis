@@ -101,8 +101,10 @@ if (isset($_POST['submit'])) {
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $alt['kode_alt']; ?></td>
                                         <td><?= $alt['nama_alt']; ?></td>
-                                        <td><?= $alt['image']; ?></td>
-                                        <td><?= $alt['url']; ?></td>
+                                        <td>
+                                            <img src="../assets/img/<?= $alt['gambar']; ?>" alt="<?= $alt['gambar']; ?>" width="100" height="80">
+                                        </td>
+                                        <td><?= $alt['website']; ?></td>
                                         <td>
                                             <a href="edit.php?id=<?= $alt['id_alt']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
                                             <a href="hapus-alternatif.php?id=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>

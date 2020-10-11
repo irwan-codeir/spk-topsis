@@ -5,7 +5,7 @@ require "functions.php";
 $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
 
 // $delete = mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
-// mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
+mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 
 $a2 = mysqli_query($conn, "SELECT SUM(pow(k01, 2)) AS total1, SUM(pow(k02, 2)) AS total2, SUM(pow(k03, 2)) AS total3, SUM(pow(k04, 2)) AS total4, SUM(pow(k05, 2)) AS total5 FROM tbl_alternatif");
 // <!-- menghitung jumlah sum masing2 alternatif -->
@@ -17,10 +17,13 @@ foreach ($a2 as $a) {
     $sum5 = $a['total5'];
 }
 
-// kriteria
 
 $result = mysqli_query($conn, "SELECT * FROM tbl_pengunjung ORDER BY id DESC limit 1");
 $k = mysqli_fetch_assoc($result);
+
+// var_dump($k);
+// exit;
+
 $kriteria1 = $k['k01'];
 $kriteria2 = $k['k02'];
 $kriteria3 = $k['k03'];
@@ -55,14 +58,15 @@ foreach ($query as $a) {
 
         $pref = $dNegatif / ($dNegatif + $dPositif);
 
-        $query = "INSERT INTO tbl_preferensi VALUES('','','$pref')";
+        $query = "INSERT INTO tbl_preferensi VALUES('','$pref')";
+
         mysqli_query($conn, $query);
     }
 }
 
 
 // $pref = mysqli_query($conn, "SELECT id, max(pref) as pre FROM tbl_preferensi"); max(pref) as pre
-$pref = mysqli_query($conn, "SELECT id_alt, nama_alt, max(pref) as pre, url, image FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id");
+$pref = mysqli_query($conn, "SELECT id_alt, nama_alt, max(pref) as pre, website, gambar FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id");
 
 ?>
 
@@ -72,12 +76,12 @@ $pref = mysqli_query($conn, "SELECT id_alt, nama_alt, max(pref) as pre, url, ima
             <div class="col">
                 <div class="card text-center d-flex align-items-center p-5">
                     <?php foreach ($pref as $pre) : ?>
-                        <img class="card-img-top img-thumbnail" src="" alt="<?= $pre["image"]; ?>" style="width: 300px; height: 180px;">
+                        <!-- <img class="card-img-top img-thumbnail" src="assets/img/<?= $pre["gambar"]; ?>" alt="<?= $pre["gambar"]; ?>" style="width: 300px; height: 180px;"> -->
                         <div class="card-body">
                             <h4 class="card-title"><?= $pre["id_alt"]; ?></h4>
                             <h4 class="card-title"><?= $pre["nama_alt"]; ?></h4>
                             <h4 class="card-title"><?= $pre["pre"]; ?></h4>
-                            <a href="<?= $pre["url"]; ?>"></a>
+                            <a href="<?= $pre["website"]; ?>"><?= $pre["website"]; ?></a>
                         </div>
                     <?php endforeach; ?>
                     <a href="index.php" class="btn btn-success">Kembali</a>

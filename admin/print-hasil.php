@@ -54,7 +54,6 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title text-center">Detail Hasil Topsis</h4>
-                <p class="d"><a href="print-hasil.php"><i class="fa fa-print"></i> Print</a></p>
                 <!-- <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-alternatif" role="tab" aria-controls="nav-home" aria-selected="true">Nilai Alternatif</a>
@@ -371,13 +370,16 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                             <table class="table table-sm progress-table text-center">
                                 <thead class="text-uppercase">
                                     <tr>
-                                        <th scope="col" colspan="4">Nilai Preferensi</th>
+                                        <th scope="col" colspan="3">Nilai Preferensi</th>
                                         <th scope="col">Perangkingan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!-- delete isi tabel preferensi -->
                                     <?php
+                                    // $altf = ['Avanza', 'Veloz', 'Sienta', 'Mobilio', 'Ertiga', 'Ertiga Sport', 'APV Arena', 'APV Luxury', 'Xenia', 'Xpander', 'Xpander Cross', 'Grand Livina', 'Cortez', 'Confero', 'Panther'];
+
+                                    // $kode_alt = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15'];
 
                                     $i = 1;
                                     ?>
@@ -417,14 +419,11 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 
                                         <?php endforeach; ?>
                                     <?php endforeach; ?>
-                                    <?php $preff = mysqli_query($conn, "SELECT id_alt, nama_alt, gambar, pref  FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id ORDER BY pref DESC"); ?>
+                                    <?php $preff = mysqli_query($conn, "SELECT id_alt, nama_alt, pref  FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id ORDER BY pref DESC"); ?>
                                     <?php foreach ($preff as $pref) : ?>
                                         <tr>
                                             <td><?= "A" . $pref['id_alt']; ?></td>
                                             <td><?= $pref['nama_alt']; ?></td>
-                                            <td>
-                                                <img src="../assets/img/<?= $pref['gambar']; ?>" alt="<?= $pref['gambar']; ?>" width="100" height="80">
-                                            </td>
                                             <td><?= $pref['pref']; ?></td>
                                             <td>
                                                 <?= $i++; ?>
@@ -443,5 +442,8 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 <!-- data admin Table end -->
 </div>
 
+<script>
+    window.print();
+</script>
 
 <?php include "template/footer.php"; ?>
