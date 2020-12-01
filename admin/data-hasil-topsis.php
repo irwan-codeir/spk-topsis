@@ -1,3 +1,4 @@
+<?php $title = "Data Hasil Topsis"; ?>
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
@@ -10,38 +11,26 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
-$pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
+// konfigurasi pagination
+$visitor = mysqli_query($conn, "SELECT * FROM tbl_visitor");
+$row = mysqli_fetch_row($visitor);
+$jumlahDataPerhalaman = 5;
+$jumlahData = count($row);
+// var_dump($jumlahData);
+// die;
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+$visitors = mysqli_query($conn, "SELECT * FROM tbl_visitor LIMIT $awalData, $jumlahDataPerhalaman");
+
+// $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung ORDER BY id DESC");
 
 ?>
 
 <div class="main-content">
     <!-- header area start -->
     <!-- page-title -->
-    <!-- page-title -->
-    <div class="page-title-area">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                <div class="breadcrumbs-area clearfix">
-                    <!-- <h4 class="page-title pull-left">Data</h4> -->
-                    <ul class="breadcrumbs pull-left">
-                        <li><a href="index.html">Home</a></li>
-                        <li><span>Data Hasil Topsis</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6 clearfix">
-                <div class="user-profile pull-right">
-                    <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $_SESSION["username"]; ?><i class="fa fa-angle-down"></i></h4>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="../index.php">Lihat Web</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="logout.php">Log Out</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include "template/topbar.php"; ?>
     <!-- end page-title -->
 
     <!-- data admin -->
@@ -51,7 +40,7 @@ $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
                 <h4 class="header-title">Data Hasil Topsis</h4>
                 <div class="single-table">
                     <div class="table-responsive">
-                        <table class="table table-hover progress-table">
+                        <table class="table table-hover progress-table text-center">
                             <thead class="text-uppercase">
                                 <tr>
                                     <th scope="col">No</th>
@@ -59,12 +48,12 @@ $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
                                     <th scope="col">Email</th>
                                     <th scope="col">Kriteria Yang DiPilih</th>
 
-                                    <th scope="col">Lihat Hasil</th>
+                                    <th scope="col">Detail Hasil</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 1; ?>
-                                <?php foreach ($pengunjung as $hsl) : ?>
+                                <?php $i = $awalData + 1; ?>
+                                <?php foreach ($visitors as $hsl) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $hsl['nama']; ?></td>
@@ -115,10 +104,8 @@ $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
                                                 </li>
                                             </ul>
                                         </td>
-                                        <td>
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="detail-hasil-topsis.php?id=<?= $hsl['id']; ?>" class="text-danger"><i class="fa fa-eye"></i></a></li>
-                                            </ul>
+                                        <td class="text-center">
+                                            <a href="detail-hasil-topsis.php?id=<?= $hsl['id']; ?>" class="text-danger"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -126,6 +113,35 @@ $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
                         </table>
                     </div>
                 </div>
+                <!-- pagination -->
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4">
+                    <ul class="pagination">
+                        <?php if ($halamanAktif > 1) : ?>
+                            <li class="page-item">
+                                <a class="page-link" href="data-hasil-topsis.php?halaman=<?= $halamanAktif - 1; ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+                            <?php if ($i == $halamanAktif) : ?>
+                                <li class="page-item"><a class="page-link" style="font-weight: bold; color: red; font-size:medium;" href="data-hasil-topsis.php?halaman=<?= $i; ?>"><?= $i; ?></a></li>
+                            <?php else : ?>
+                                <li class="page-item"><a class="page-link" href="data-hasil-topsis.php?halaman=<?= $i; ?>"><?= $i; ?></a></li>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+
+                        <?php if ($halamanAktif < $jumlahHalaman) : ?>
+                            <li class="page-item">
+                                <a class="page-link" href="data-hasil-topsis.php?halaman=<?= $halamanAktif + 1; ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+                <!-- end pagination -->
             </div>
         </div>
     </div>

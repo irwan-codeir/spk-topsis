@@ -1,3 +1,4 @@
+<?php $title = "Hasil Rekomendasi"; ?>
 <?php include "template/header.php"; ?>
 <?php
 require "functions.php";
@@ -66,7 +67,7 @@ foreach ($query as $a) {
 
 
 // $pref = mysqli_query($conn, "SELECT id, max(pref) as pre FROM tbl_preferensi"); max(pref) as pre
-$pref = mysqli_query($conn, "SELECT id_alt, nama_alt, max(pref) as pre, website, gambar FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id");
+$pref = mysqli_query($conn, "SELECT * FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id ORDER BY pref DESC LIMIT 1");
 
 ?>
 
@@ -74,17 +75,17 @@ $pref = mysqli_query($conn, "SELECT id_alt, nama_alt, max(pref) as pre, website,
     <div class="container">
         <div class="row">
             <div class="col">
-                <div class="card text-center d-flex align-items-center p-5">
+                <div class="card text-center d-flex align-items-center p-5" style="border: none;">
                     <?php foreach ($pref as $pre) : ?>
-                        <!-- <img class="card-img-top img-thumbnail" src="assets/img/<?= $pre["gambar"]; ?>" alt="<?= $pre["gambar"]; ?>" style="width: 300px; height: 180px;"> -->
+                        <img class="card-img-top img-thumbnail" src="assets/img/<?= $pre["gambar"]; ?>" alt="<?= $pre["gambar"]; ?>" style="width: 300px; height: 180px; border:none;">
                         <div class="card-body">
-                            <h4 class="card-title"><?= $pre["id_alt"]; ?></h4>
-                            <h4 class="card-title"><?= $pre["nama_alt"]; ?></h4>
-                            <h4 class="card-title"><?= $pre["pre"]; ?></h4>
-                            <a href="<?= $pre["website"]; ?>"><?= $pre["website"]; ?></a>
+                            <!-- <h4 class="card-title"><?= $pre["id_alt"]; ?></h4> -->
+                            <h4 class="card-title"><?= $pre["nama_alt"]; ?>, menjadi rekomendasi terbaik untuk anda!</h4>
+                            <!-- <h4 class="card-title"><?= $pre["pref"]; ?></h4> -->
+                            <p>Kunjungi dealer <a href="<?= $pre["website"]; ?>" target="_blank"><?= $pre["website_seo"]; ?></a>.</p>
                         </div>
                     <?php endforeach; ?>
-                    <a href="index.php" class="btn btn-success">Kembali</a>
+                    <a href=" index.php" class="btn btn-success">Kembali</a>
                 </div>
             </div>
         </div>

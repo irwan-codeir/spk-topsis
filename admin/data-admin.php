@@ -1,3 +1,4 @@
+<?php $title = "Data Admin"; ?>
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
@@ -33,8 +34,8 @@ if (isset($_POST['submit'])) {
 }
 
 // jika tombol cari diklik
-if (isset($_POST['cari'])) {
-    $admin = cari($_POST['keyword']);
+if (isset($_GET['cari'])) {
+    $admin = cari_admin($_GET['keyword']);
 
     // alur form search, setelah form pencarian dibuat, buat alur pencariannya
     // jika user masukan pencarian atau ketik keyword lalu mengklik tombol cari
@@ -48,31 +49,7 @@ if (isset($_POST['cari'])) {
 <div class="main-content">
     <!-- header area start -->
     <!-- page-title -->
-    <!-- page-title -->
-    <div class="page-title-area">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                <div class="breadcrumbs-area clearfix">
-                    <!-- <h4 class="page-title pull-left">Data</h4> -->
-                    <ul class="breadcrumbs pull-left">
-                        <li><a href="index.html">Home</a></li>
-                        <li><span>Data Admin</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6 clearfix">
-                <div class="user-profile pull-right">
-                    <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $_SESSION["username"]; ?><i class="fa fa-angle-down"></i></h4>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Message</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="logout.php">Log Out</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include "template/topbar.php"; ?>
     <!-- end page-title -->
 
     <!-- data admin -->
@@ -100,7 +77,7 @@ if (isset($_POST['cari'])) {
                                     <th scope="col">Image</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Username</th>
-                                    <th scope="col">Password</th>
+                                    <!-- <th scope="col">Password</th> -->
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -110,11 +87,11 @@ if (isset($_POST['cari'])) {
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
                                         <td>
-                                            <img src="assets/img/<?= $adm['image']; ?>" alt="">
+                                            <img src="assets/img/<?= $adm['foto']; ?>" alt="<?= $adm['foto']; ?>" width="80" height="80">
                                         </td>
                                         <td><?= $adm['nama']; ?></td>
                                         <td><?= $adm['username']; ?></td>
-                                        <td><?= $adm['password']; ?></td>
+                                        <!-- <td><?= $adm['password']; ?></td> -->
                                         <td>
                                             <a href="edit-data-admin.php?id=<?= $adm['id']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
                                             <a href="hapus-admin.php?id=<?= $adm['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
@@ -136,7 +113,7 @@ if (isset($_POST['cari'])) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Alternatif</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Admin</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -144,7 +121,7 @@ if (isset($_POST['cari'])) {
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-10 offset-1">
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col">
                                     <div class="form-group">
@@ -160,12 +137,10 @@ if (isset($_POST['cari'])) {
                                         <input type="password" name="password" id="" class="form-control form-control-sm" placeholder="">
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Image</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="image" id="customFile">
-                                            <label class="custom-file-label" for="customFile">Choose file</label>
-                                        </div>
+                                        <label for="exampleFormControlInput1">Upload Foto</label>
+                                        <input type="file" class="form-control-file" name="foto" id="foto">
                                     </div>
+
                                 </div>
                             </div>
                     </div>
@@ -178,5 +153,6 @@ if (isset($_POST['cari'])) {
             </div>
         </div>
     </div>
+</div>
 
-    <?php include "template/footer.php"; ?>
+<?php include "template/footer.php"; ?>

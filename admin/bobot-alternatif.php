@@ -1,3 +1,4 @@
+<?php $title = "Bobot Alternatif"; ?>
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
@@ -12,7 +13,7 @@ if (!isset($_SESSION["login"])) {
 }
 
 
-$alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
+$bobotAlternatif = mysqli_query($conn, "SELECT * FROM tbl_bobot_alternatif INNER JOIN tbl_alternatif ON id_alt = id");
 
 if (isset($_POST['submit'])) {
     if (tambah_bobot_alternatif($_POST) > 0) {
@@ -26,7 +27,7 @@ if (isset($_POST['submit'])) {
         echo "
             <script>
                 alert('data gagal ditambahkan!');
-                document.location.href = 'tambah_alternatif.php';
+                document.location.href = 'bobot-alternatif.php';
             </script>
         ";
     }
@@ -37,34 +38,9 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="main-content">
-    <!-- header area start -->
-    <!-- page-title -->
-    <!-- page-title -->
-    <div class="page-title-area">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                <div class="breadcrumbs-area clearfix">
-                    <!-- <h4 class="page-title pull-left">Data</h4> -->
-                    <ul class="breadcrumbs pull-left">
-                        <li><a href="index.html">Home</a></li>
-                        <li><span>Bobot Alternatif</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6 clearfix">
-                <div class="user-profile pull-right">
-                    <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $_SESSION["username"]; ?><i class="fa fa-angle-down"></i></h4>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Message</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="logout.php">Log Out</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end page-title -->
+
+    <!-- title -->
+    <?php include "template/topbar.php"; ?>
 
     <!-- data admin -->
     <div class="col-12 mt-2">
@@ -74,11 +50,18 @@ if (isset($_POST['submit'])) {
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
                     Input
                 </button>
+                <?php
+                // $popover =  "'K01 : Harga', 'K02 : BBM', 'K03 : Kenyamanan', 'K04 : Penumpang', 'K05 : Mesin'";
+
+                ?>
+                <!-- <button type="button" class="btn btn-secondary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="<?= $popover; ?>"> -->
+                <!-- Keterangan -->
+                <!-- </button> -->
                 <form class="form-group float-right" action="" method="get">
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="keyword" placeholder="Search">
                         <div class="input-group-append">
-                            <button class="btn btn-transparent" type="submit">Go</button>
+                            <button class="btn btn-transparent" type="submit" name="cari">Go</button>
                         </div>
                     </div>
                 </form>
@@ -89,6 +72,7 @@ if (isset($_POST['submit'])) {
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Kode</th>
+                                    <th scope="col">Alternatif</th>
                                     <th scope="col">K01</th>
                                     <th scope="col">K02</th>
                                     <th scope="col">K03</th>
@@ -99,10 +83,11 @@ if (isset($_POST['submit'])) {
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                <?php foreach ($alternatif as $alt) : ?>
+                                <?php foreach ($bobotAlternatif as $alt) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $alt['kode_alt']; ?></td>
+                                        <td><?= $alt['nama_alt']; ?></td>
                                         <td><?= $alt['k01']; ?></td>
                                         <td><?= $alt['k02']; ?></td>
                                         <td><?= $alt['k03']; ?></td>
@@ -110,7 +95,7 @@ if (isset($_POST['submit'])) {
                                         <td><?= $alt['k05']; ?></td>
                                         <td>
                                             <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#editModal<?= $alt['id_alt']; ?>">Edit</a>
-                                            <a href="hapus-bobot-alternatif.php?id_alt=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
+                                            <a href="hapus-bobot-alternatif.php?id=<?= $alt['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -138,24 +123,24 @@ if (isset($_POST['submit'])) {
                 <div class="row">
                     <div class="col-md-10 offset-1">
                         <form action="" method="post">
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Kode Alt</label>
-                                        <input type="text" class="form-control" name="kode_alt" placeholder="cth: A01" autofocus autocomplete="off">
+                                        <input type="text" class="form-control" name="kode_alt" value="<?= $kodeData; ?>">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">K01</label>
+                                        <label for="exampleFormControlInput1">K01 (Harga)</label>
                                         <input type="number" class="form-control" name="k01" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">K02</label>
+                                        <label for="exampleFormControlInput1">K02 (BBM)</label>
                                         <input type="number" class="form-control" name="k02" placeholder="">
                                     </div>
                                 </div>
@@ -163,19 +148,19 @@ if (isset($_POST['submit'])) {
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">K03</label>
+                                        <label for="exampleFormControlInput1">K03 (Kenyamanan)</label>
                                         <input type="number" class="form-control" name="k03" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">K04</label>
+                                        <label for="exampleFormControlInput1">K04 (Penumpang)</label>
                                         <input type="number" class="form-control" name="k04" placeholder="">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleFormControlInput1">K05</label>
+                                <label for="exampleFormControlInput1">K05 (Mesin)</label>
                                 <input type="number" class="form-control" name="k05" placeholder="">
                             </div>
                     </div>

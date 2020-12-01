@@ -15,8 +15,8 @@ function query($query)
 	return $rows;
 }
 
-
-function tambah_pengunjung($data)
+// CRUD Data Visitor
+function tambah_visitor($data)
 {
 	global $conn;
 
@@ -28,23 +28,62 @@ function tambah_pengunjung($data)
 	$k03 = $data['k03'];
 	$k04 = $data['k04'];
 	$k05 = $data['k05'];
+	$tgl = $data['date'];
+
 
 	// query insert data
-	$query = "INSERT INTO tbl_pengunjung
+	$query = "INSERT INTO tbl_visitor
 				VALUES
-				('','$nama','$email','$k01','$k02','$k03','$k04','$k05')
+				('','$nama','$email','$k01','$k02','$k03','$k04','$k05','$tgl')
 				";
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
 }
 
+function hapus_visitor($id)
+{
+	global $conn;
+
+	mysqli_query($conn, "DELETE FROM tbl_visitor WHERE id = $id");
+	return mysqli_affected_rows($conn);
+}
+
+function cari_visitor($keyword)
+{
+	// query search
+	$query = "SELECT * FROM tbl_visitor
+				WHERE
+				nama LIKE '%$keyword%' OR
+				email LIKE '%$keyword%'
+		";
+	return query($query);
+}
+
 function tambah_bobot_alternatif($data)
 {
 	global $conn;
 
+	// membuat kode otomatis
+	// mengambil data barang dengan kode paling besar
+	$query = mysqli_query($conn, "SELECT max(kode_alt) as kode FROM tbl_bobot_alternatif");
+	$kode = mysqli_fetch_array($query);
+	$dataKode = $kode['kode'];
+
+	// mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+	// dan diubah ke integer dengan (int)
+	$urutan = (int) substr($dataKode, 2, 1);
+	// bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+	$urutan++;
+	// membentuk kode barang baru
+	// perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+	// misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+	// angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG
+
+	$huruf = "A1";
 	// ambil data dari tiap elemen dalam form / dari name
-	$kode_alt = $data['kode_alt'];
+	// $kode_alt = $dataKode['kode'];
+	$kodeData = $huruf . sprintf("%01s", $urutan);
 	$k01 = $data['k01'];
 	$k02 = $data['k02'];
 	$k03 = $data['k03'];
@@ -52,15 +91,186 @@ function tambah_bobot_alternatif($data)
 	$k05 = $data['k05'];
 
 	// query insert data
-	$query = "INSERT INTO tbl_alternatif
+	$query = "INSERT INTO tbl_bobot_alternatif
 				VALUES
-				('','$kode_alt','$k01','$k02','$k03','$k04','$k05')
+				('','$kodeData','$k01','$k02','$k03','$k04','$k05')
 				";
 	mysqli_query($conn, $query);
 
 	return mysqli_affected_rows($conn);
 }
 
+// CRUD Data Kriteria
+function tambah_kriteria($data)
+{
+	global $conn;
+
+	// ambil data dari tiap elemen dalam form / dari name
+	$kode = $data['kode_krt'];
+	$kriteria = $data['nama_krt'];
+
+	// query insert data
+	$query = "INSERT INTO tbl_kriteria
+				VALUES
+				('','$kode','$kriteria')
+				";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+function hapus_kriteria($id)
+{
+	global $conn;
+
+	mysqli_query($conn, "DELETE FROM tbl_kriteri WHERE id_krt = $id");
+	return mysqli_affected_rows($conn);
+}
+
+function cari_kriteria($keyword)
+{
+	// query search
+	$query = "SELECT * FROM tbl_kriteria 
+				WHERE
+				nama_krt LIKE '%$keyword%' OR
+				kode_krt LIKE '%$keyword%'
+		";
+	return query($query);
+}
+
+// tambah bobot kriteria harga, bbm, kenyamanan, jumlah penumpang, kapasitas mesin
+function tambah_bobot_kriteria_harga($data)
+{
+	global $conn;
+
+	// ambil data dari tiap elemen dalam form / dari name
+	$nama = $data['nama_kriteria'];
+	$bobot = $data['bobot'];
+
+	// query insert data
+	$query = "INSERT INTO tbl_bobot_kriteria_harga
+				VALUES
+				('','$nama','$bobot')
+				";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+function tambah_bobot_kriteria_bbm($data)
+{
+	global $conn;
+
+	// ambil data dari tiap elemen dalam form / dari name
+	$nama = $data['nama_kriteria'];
+	$bobot = $data['bobot'];
+
+	// query insert data
+	$query = "INSERT INTO tbl_bobot_kriteria_bbm
+				VALUES
+				('','$nama','$bobot')
+				";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+function tambah_bobot_kriteria_kenyamanan($data)
+{
+	global $conn;
+
+	// ambil data dari tiap elemen dalam form / dari name
+	$nama = $data['nama_kriteria'];
+	$bobot = $data['bobot'];
+
+	// query insert data
+	$query = "INSERT INTO tbl_bobot_kriteria_kenyamanan
+				VALUES
+				('','$nama','$bobot')
+				";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+function tambah_bobot_kriteria_mesin($data)
+{
+	global $conn;
+
+	// ambil data dari tiap elemen dalam form / dari name
+	$nama = $data['nama_kriteria'];
+	$bobot = $data['bobot'];
+
+	// query insert data
+	$query = "INSERT INTO tbl_bobot_kriteria_mesin
+				VALUES
+				('','$nama','$bobot')
+				";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+function tambah_bobot_kriteria_penumpang($data)
+{
+	global $conn;
+
+	// ambil data dari tiap elemen dalam form / dari name
+	$nama = $data['nama_kriteria'];
+	$bobot = $data['bobot'];
+
+	// query insert data
+	$query = "INSERT INTO tbl_bobot_kriteria_penumpang
+				VALUES
+				('','$nama','$bobot')
+				";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+// hapus bobot kriteria harga, bbm, mesin, penumpang, kenyamanan
+function hapus_bobot_kriteria_bbm($id)
+{
+	global $conn;
+
+	mysqli_query($conn, "DELETE FROM tbl_bobot_kriteria_bbm WHERE id_bbm = $id");
+	return mysqli_affected_rows($conn);
+}
+
+function hapus_bobot_kriteria_harga($id)
+{
+	global $conn;
+
+	mysqli_query($conn, "DELETE FROM tbl_bobot_kriteria_harga WHERE id_harga = $id");
+	return mysqli_affected_rows($conn);
+}
+
+function hapus_bobot_kriteria_kenyamanan($id)
+{
+	global $conn;
+
+	mysqli_query($conn, "DELETE FROM tbl_bobot_kriteria_kenyamanan WHERE id_kenyamanan = $id");
+	return mysqli_affected_rows($conn);
+}
+
+function hapus_bobot_kriteria_penumpang($id)
+{
+	global $conn;
+
+	mysqli_query($conn, "DELETE FROM tbl_bobot_kriteria_penumpang WHERE id_penumpang = $id");
+	return mysqli_affected_rows($conn);
+}
+
+function hapus_bobot_kriteria_mesin($id)
+{
+	global $conn;
+
+	mysqli_query($conn, "DELETE FROM tbl_bobot_kriteria_mesin WHERE id_mesin = $id");
+	return mysqli_affected_rows($conn);
+}
+
+// CRUD Data Alternatif
 function tambah_alternatif($data)
 {
 	global $conn;
@@ -144,11 +354,12 @@ function edit_alternatif($data)
 	return mysqli_affected_rows($conn);
 }
 
+// mengahpus bobot alternatif
 function hapus_bobot_alternatif($id)
 {
 	global $conn;
 
-	mysqli_query($conn, "DELETE FROM tbl_alternatif WHERE id_alt = $id");
+	mysqli_query($conn, "DELETE FROM tbl_bobot_alternatif WHERE id = $id");
 
 	// Fungsi mysqli_affected_rows () mengembalikan jumlah baris yang terpengaruh 
 	// di SELECT, INSERT, UPDATE, REPLACE, atau DELETE query sebelumnya
@@ -171,7 +382,7 @@ function hapus_alternatif($id)
 }
 
 
-function cari($keyword)
+function cari_alternatif($keyword)
 {
 	// query search
 	$query = "SELECT * FROM tbl_alternatif 
@@ -179,6 +390,8 @@ function cari($keyword)
 -- gunakan wild card agar pencarian kata nya fleksibel, bukan dgn = tapi dgn LIKE
 				-- nama = '$keyword'
 				-- cari berdasarkan field nama dan nik
+				nama_alt LIKE '%$keyword%' OR
+				website_seo LIKE '%$keyword%' OR
 				kode_alt LIKE '%$keyword%'
 		";
 	return query($query);
@@ -189,15 +402,21 @@ function tambah_admin($data)
 	global $conn;
 
 	$nama = htmlspecialchars($data["nama"]);
-	$image = $data["image"];
 	$username = strtolower(stripslashes($data["username"]));
 	$password = mysqli_real_escape_string($conn, $data["password"]);
 	$enkripsipassword = password_hash($password, PASSWORD_DEFAULT);
 
+	// upload foto
+	// panggil fungsi upload()
+	$foto = upload();
+	if ($foto === false) {
+		// kalo gagal fungsi INSERT nya hentikan
+		return false;
+	}
 	// query insert data
 	$query = "INSERT INTO tbl_admin
 				VALUES
-				('','$image','$nama','$username','$enkripsipassword')
+				('','$nama','$username','$enkripsipassword','$foto')
 				";
 	mysqli_query($conn, $query);
 
@@ -206,21 +425,10 @@ function tambah_admin($data)
 
 function upload()
 {
-	// FILE HANDLING atau yg akan dipelajari dalam proses upload gambar
-	// <input type='file'
-	// enctype atau encoding type
-	// $_FILES
-	// move_upload_file
-
-	// string diambil mnggunakan $_POST
-	// file/gambar diambil menggunakan $_FILES
-	// di dalam $_FILES ada 5 element jika kita tampilkan mggunakan var_damp()
-
-	// fitur upload terhubung di dalam function tambah()
-	$namaFile = $_FILES['gambar']['name'];
-	$ukuranFile = $_FILES['gambar']['size'];
-	$error = $_FILES['gambar']['error'];
-	$tmpName = $_FILES['gambar']['tmp_name']; // tampat gambar disimpan smentara
+	$namaFile = $_FILES['foto']['name'];
+	$ukuranFile = $_FILES['foto']['size'];
+	$error = $_FILES['foto']['error'];
+	$tmpName = $_FILES['foto']['tmp_name']; // tampat gambar disimpan smentara
 
 	// cek apakah tidak ada gambar yg diupload
 	if ($error === 4) {
@@ -233,13 +441,13 @@ function upload()
 
 	// cek apakah yg diupload adalah gambar
 	// pathinfo(), PATHINFO_EXTENSION menyimpan file extension jpg, png dll
-	$namaGambar = pathinfo($namaFile, PATHINFO_BASENAME);
-	$format = pathinfo($namaGambar, PATHINFO_EXTENSION);
+	$namaFoto = pathinfo($namaFile, PATHINFO_BASENAME);
+	$format = pathinfo($namaFoto, PATHINFO_EXTENSION);
 	// $ekstensiGambar = strtolower(end($format));
 	if (!$format) { // in_array ngecek string di dalam array
 		// !in_array kalo tidak ada gambar yg valid, kasih pesan
 		echo "<script>
-			alert('yang anda upload bukan gambar!');
+			alert('yang anda upload bukan foto!');
 		</script>";
 		return false;
 	}
@@ -260,7 +468,8 @@ function upload()
 	$namaFileBaru .= $format;
 
 
-	move_uploaded_file($tmpName, 'img/' . $namaFileBaru);
+	$test = move_uploaded_file($tmpName, 'admin/assets/img/' . $namaFileBaru);
+	var_dump($test);
 
 	return $namaFileBaru;
 	// kenapa namafile nya di return, supaya ketika gambar nya berhasil di upload, isi dari gambar/foto(lihat baris 31) adalah nama file nya sehingga gambar bisa di insert kan ke database

@@ -1,4 +1,4 @@
-<footer class="bg-dark">
+<footer class="" style="background-color: black;">
     <div class="container">
         <div class="row mt-3">
             <div class="col">

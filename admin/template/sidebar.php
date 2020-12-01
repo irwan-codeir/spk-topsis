@@ -31,7 +31,7 @@
                             <a href="data-alternatif.php"><i class="fa fa-table" aria-hidden="true"></i></i><span>Data Alternatif</span></a>
                         </li>
                         <li>
-                            <a href="data-pengunjung.php"><i class="fa fa-users" aria-hidden="true"></i><span>Data Pengunjung</span></a>
+                            <a href="data-visitor.php"><i class="fa fa-users" aria-hidden="true"></i><span>Data Visitor</span></a>
                         </li>
                         <li>
                             <a href="data-hasil-topsis.php"><i class="fa fa-table" aria-hidden="true"></i><span>Data Hasil Topsis</span></a>

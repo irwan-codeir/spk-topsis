@@ -3,8 +3,8 @@ session_start();
 require "../functions.php";
 
 if (isset($_POST["login"])) {
-    // $nama = $_SESSION["nama"];
-    // $nama = $_POST["image"];
+    $foto = $_SESSION["foto"];
+    // $foto = $_POST["foto"];
     $username = $_POST["username"];
     $password = $_POST["password"];
 
@@ -17,6 +17,8 @@ if (isset($_POST["login"])) {
         if (password_verify($password, $row["password"])) {
             // set session
             $_SESSION["username"] = $username;
+            // $_SESSION["nama"] = true;
+            $_SESSION["foto"] = $foto;
             $_SESSION["login"] = true;
             header("Location: index.php");
             exit;
@@ -76,7 +78,7 @@ if (isset($_POST["login"])) {
                             <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn bg-dark border-secondary text-white" name="login">Submit</button>
+                            <button type="submit" class="btn bg-dark border-secondary text-white" name="login">Login</button>
                         </div>
                     </form>
                 </div>

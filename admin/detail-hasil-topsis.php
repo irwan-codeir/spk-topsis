@@ -1,3 +1,4 @@
+<?php $title = "Detail Perhitungan Topsis"; ?>
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
@@ -9,12 +10,11 @@ if (!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
 }
-
 // ambil data di URL
-
-$alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
+$alternatif = mysqli_query($conn, "SELECT * FROM tbl_bobot_alternatif");
 
 // $delete = mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
+// untuk mengosongkan data table preference
 mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 
 ?>
@@ -22,31 +22,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 <div class="main-content">
     <!-- header area start -->
     <!-- page-title -->
-    <!-- page-title -->
-    <div class="page-title-area">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                <div class="breadcrumbs-area clearfix">
-                    <!-- <h4 class="page-title pull-left">Data</h4> -->
-                    <ul class="breadcrumbs pull-left">
-                        <li><a href="index.html">Home</a></li>
-                        <li><span>Data Hasil Topsis</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6 clearfix">
-                <div class="user-profile pull-right">
-                    <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $_SESSION["username"]; ?><i class="fa fa-angle-down"></i></h4>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="../index.php">Lihat Web</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="logout.php">Log Out</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include "template/topbar.php"; ?>
     <!-- end page-title -->
 
     <!-- data admin -->
@@ -54,7 +30,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title text-center">Detail Hasil Topsis</h4>
-                <p class="d"><a href="print-hasil.php"><i class="fa fa-print"></i> Print</a></p>
+                <!-- <p class="d"><a href="print-hasil.php"><i class="fa fa-print"></i> Print</a></p> -->
                 <!-- <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-alternatif" role="tab" aria-controls="nav-home" aria-selected="true">Nilai Alternatif</a>
@@ -99,7 +75,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                     </div>
                 </div>
                 <?php
-                $a2 = mysqli_query($conn, "SELECT SUM(pow(k01, 2)) AS total1, SUM(pow(k02, 2)) AS total2, SUM(pow(k03, 2)) AS total3, SUM(pow(k04, 2)) AS total4, SUM(pow(k05, 2)) AS total5 FROM tbl_alternatif");
+                $a2 = mysqli_query($conn, "SELECT SUM(pow(k01, 2)) AS total1, SUM(pow(k02, 2)) AS total2, SUM(pow(k03, 2)) AS total3, SUM(pow(k04, 2)) AS total4, SUM(pow(k05, 2)) AS total5 FROM tbl_bobot_alternatif");
                 ?>
                 <!-- menghitung jumlah sum masing2 alternatif -->
                 <?php foreach ($a2 as $a) : ?>
@@ -144,7 +120,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                 </div>
                 <?php
                 $id = $_GET["id"];
-                $result = mysqli_query($conn, "SELECT * FROM tbl_pengunjung WHERE id = $id");
+                $result = mysqli_query($conn, "SELECT * FROM tbl_visitor WHERE id = $id");
                 $k = mysqli_fetch_assoc($result);
                 $kriteria1 = $k['k01'];
                 $kriteria2 = $k['k02'];
@@ -203,7 +179,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                 <tbody>
                                     <!-- menentukan max dan min -->
                                     <?php
-                                    $query = mysqli_query($conn, "SELECT max(k01) as max1, min(k01) as min1, max(k02) as max2, min(k02) as min2, max(k03) as max3, min(k03) as min3, max(k04) as max4, min(k04) as min4, max(k05) as max5, min(k05) as min5 FROM tbl_alternatif");
+                                    $query = mysqli_query($conn, "SELECT max(k01) as max1, min(k01) as min1, max(k02) as max2, min(k02) as min2, max(k03) as max3, min(k03) as min3, max(k04) as max4, min(k04) as min4, max(k05) as max5, min(k05) as min5 FROM tbl_bobot_alternatif");
                                     ?>
 
 
@@ -417,13 +393,13 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
 
                                         <?php endforeach; ?>
                                     <?php endforeach; ?>
-                                    <?php $preff = mysqli_query($conn, "SELECT id_alt, nama_alt, gambar, pref  FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id ORDER BY pref DESC"); ?>
+                                    <?php $preff = mysqli_query($conn, "SELECT *  FROM tbl_preferensi INNER JOIN tbl_alternatif ON id_alt = id ORDER BY pref DESC"); ?>
                                     <?php foreach ($preff as $pref) : ?>
                                         <tr>
                                             <td><?= "A" . $pref['id_alt']; ?></td>
                                             <td><?= $pref['nama_alt']; ?></td>
                                             <td>
-                                                <img src="../assets/img/<?= $pref['gambar']; ?>" alt="<?= $pref['gambar']; ?>" width="100" height="80">
+                                                <img src="../assets/img/<?= $pref['gambar']; ?>" alt="<?= $pref['gambar']; ?>" width="80" height="60">
                                             </td>
                                             <td><?= $pref['pref']; ?></td>
                                             <td>

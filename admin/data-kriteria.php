@@ -1,3 +1,4 @@
+<?php $title = "Data Kriteria"; ?>
 <?php include "template/header.php"; ?>
 <?php include "template/sidebar.php"; ?>
 
@@ -13,36 +14,35 @@ if (!isset($_SESSION["login"])) {
 
 $kriteria = mysqli_query($conn, "SELECT * FROM tbl_kriteria");
 
+if (isset($_POST['submit'])) {
+    if (tambah_kriteria($_POST) > 0) {
+        echo "
+        <script>
+            alert('data berhasil ditambahkan!');
+            document.location.href = 'data-kriteria.php';
+        </script>
+    ";
+    } else {
+        echo "
+        <script>
+            alert('data gagal ditambahkan!');
+            document.location.href = 'data-kriteria.php';
+        </script>
+    ";
+    }
+}
+
+// jika tombol cari diklik
+if (isset($_GET['cari'])) {
+    $kriteria = cari_kriteria($_GET['keyword']);
+}
+
 ?>
 
 <div class="main-content">
     <!-- header area start -->
     <!-- page-title -->
-    <!-- page-title -->
-    <div class="page-title-area">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                <div class="breadcrumbs-area clearfix">
-                    <!-- <h4 class="page-title pull-left">Data</h4> -->
-                    <ul class="breadcrumbs pull-left">
-                        <li><a href="index.html">Home</a></li>
-                        <li><span>Data Kriteria</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6 clearfix">
-                <div class="user-profile pull-right">
-                    <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $_SESSION["username"]; ?><i class="fa fa-angle-down"></i></h4>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Message</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="logout.php">Log Out</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include "template/topbar.php"; ?>
     <!-- end page-title -->
 
     <!-- data admin -->
@@ -55,9 +55,9 @@ $kriteria = mysqli_query($conn, "SELECT * FROM tbl_kriteria");
                 </button>
                 <form class="form-group float-right" action="" method="get">
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="keyword" placeholder="Search">
                         <div class="input-group-append">
-                            <button class="btn btn-transparent" type="submit">Go</button>
+                            <button class="btn btn-transparent" type="submit" name="cari">Go</button>
                         </div>
                     </div>
                 </form>

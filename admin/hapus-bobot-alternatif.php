@@ -2,7 +2,7 @@
 
 require "../functions.php";
 
-$id = $_GET["id_alt"];
+$id = $_GET["id"];
 
 if (hapus_bobot_alternatif($id) > 0) {
     echo "

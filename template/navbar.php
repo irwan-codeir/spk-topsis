@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-black" style="background-color: black;">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="./assets/logo/logo-oto.png" alt="" class="float-float-right">
@@ -15,7 +15,7 @@
                     <a class="nav-link" href="gallery.php">Gallery</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about.php">About Me</a>
+                    <a class="nav-link" href="about.php">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="contact.php">Contact Us</a>
