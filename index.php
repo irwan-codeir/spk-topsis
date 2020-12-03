@@ -9,7 +9,7 @@ require "functions.php";
 $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung");
 
 if (isset($_POST['submit'])) {
-    if (tambah_pengunjung($_POST) > 0) {
+    if (tambah_visitor($_POST) > 0) {
         // redirect dan alert dari javascript
         // tampilkan hasil rekomendasi
 

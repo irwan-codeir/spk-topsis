@@ -10,6 +10,7 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
+$bobotKriteria = mysqli_query($conn, "SELECT * FROM tbl_bobot_kriteria");
 $harga = mysqli_query($conn, "SELECT * FROM tbl_bobot_kriteria_harga");
 $bbm = mysqli_query($conn, "SELECT * FROM tbl_bobot_kriteria_bbm");
 $kenyamanan = mysqli_query($conn, "SELECT * FROM tbl_bobot_kriteria_kenyamanan");
@@ -146,13 +147,13 @@ if (isset($_POST['submit_harga'])) {
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        <?php foreach ($bobotKriteria as $ms) : ?>
+                                        <?php foreach ($bobotKriteria as $bk) : ?>
                                             <tr>
                                                 <th scope="row"><?= $i++; ?></th>
-                                                <td><?= $ms['kriteria']; ?></td>
-                                                <td><?= $ms['bobot']; ?></td>
+                                                <td><?= $bk['kriteria']; ?></td>
+                                                <td><?= $bk['bobot']; ?></td>
                                                 <td>
-                                                    <a href="hapus-kriteria-bobotKriteria.php?id=<?= $ms['id_bobotKriteria']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
+                                                    <a href="hapus-kriteria-bobotKriteria.php?id=<?= $bk['id_kriteria']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -189,7 +190,7 @@ if (isset($_POST['submit_harga'])) {
                                         <?php foreach ($harga as $hrg) : ?>
                                             <tr>
                                                 <th scope="row"><?= $i++; ?></th>
-                                                <td><?= $hrg['nama_kriteria']; ?></td>
+                                                <td><?= $hrg['harga']; ?></td>
                                                 <td><?= $hrg['bobot']; ?></td>
                                                 <td>
                                                     <a href="hapus-kriteria-harga.php?id=<?= $hrg['id_harga']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
@@ -229,7 +230,7 @@ if (isset($_POST['submit_harga'])) {
                                         <?php foreach ($bbm as $b) : ?>
                                             <tr>
                                                 <th scope="row"><?= $i++; ?></th>
-                                                <td><?= $b['nama_kriteria']; ?></td>
+                                                <td><?= $b['bbm']; ?></td>
                                                 <td><?= $b['bobot']; ?></td>
                                                 <td>
                                                     <a href="hapus-kriteria-bbm.php?id=<?= $b['id_bbm']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
@@ -268,7 +269,7 @@ if (isset($_POST['submit_harga'])) {
                                         <?php foreach ($kenyamanan as $ky) : ?>
                                             <tr>
                                                 <th scope="row"><?= $i++; ?></th>
-                                                <td><?= $ky['nama_kriteria']; ?></td>
+                                                <td><?= $ky['kenyamanan']; ?></td>
                                                 <td><?= $ky['bobot']; ?></td>
                                                 <td>
                                                     <a href="hapus-kriteria-kenyamanan.php?id=<?= $ky['id_kenyamanan']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
@@ -307,7 +308,7 @@ if (isset($_POST['submit_harga'])) {
                                         <?php foreach ($penumpang as $p) : ?>
                                             <tr>
                                                 <th scope="row"><?= $i++; ?></th>
-                                                <td><?= $p['nama_kriteria']; ?></td>
+                                                <td><?= $p['penumpang']; ?></td>
                                                 <td><?= $p['bobot']; ?></td>
                                                 <td>
                                                     <a href="hapus-kriteria-penumpang.php?id=<?= $p['id_penumpang']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
@@ -326,7 +327,7 @@ if (isset($_POST['submit_harga'])) {
             <div class="col-lg-6 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title float-left">Bobot Kriteria Mesin</h4>
+                        <h4 class="header-title float-left">Bobot Kriteria Kapasitas Mesin</h4>
                         <button type="button" name="submit" class="btn btn-primary btn-sm float-right mb-2" data-toggle="modal" data-target="#tambahMesin">
                             Input
                         </button>
@@ -346,7 +347,7 @@ if (isset($_POST['submit_harga'])) {
                                         <?php foreach ($mesin as $ms) : ?>
                                             <tr>
                                                 <th scope="row"><?= $i++; ?></th>
-                                                <td><?= $ms['nama_kriteria']; ?></td>
+                                                <td><?= $ms['mesin']; ?></td>
                                                 <td><?= $ms['bobot']; ?></td>
                                                 <td>
                                                     <a href="hapus-kriteria-mesin.php?id=<?= $ms['id_mesin']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
@@ -423,7 +424,7 @@ if (isset($_POST['submit_harga'])) {
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Harga</label>
-                                        <input type="text" name="nama_kriteria" id="" class="form-control form-control-sm" autofocus autocomplete="off">
+                                        <input type="text" name="harga" id="" class="form-control form-control-sm" autofocus autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Bobot</label>
@@ -461,7 +462,7 @@ if (isset($_POST['submit_harga'])) {
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">BBM</label>
-                                        <input type="text" name="nama_kriteria" id="" class="form-control form-control-sm" autofocus autocomplete="off">
+                                        <input type="text" name="bbm" id="" class="form-control form-control-sm" autofocus autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Bobot</label>
@@ -499,7 +500,7 @@ if (isset($_POST['submit_harga'])) {
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Kenyamanan</label>
-                                        <input type="text" name="nama_kriteria" id="" class="form-control form-control-sm" autofocus autocomplete="off">
+                                        <input type="text" name="kenyamanan" id="" class="form-control form-control-sm" autofocus autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Bobot</label>
@@ -537,7 +538,7 @@ if (isset($_POST['submit_harga'])) {
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Jumlah Penumpang</label>
-                                        <input type="text" name="nama_kriteria" id="" class="form-control form-control-sm" autofocus autocomplete="off">
+                                        <input type="text" name="penumpang" id="" class="form-control form-control-sm" autofocus autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Bobot</label>
@@ -575,7 +576,7 @@ if (isset($_POST['submit_harga'])) {
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Mesin</label>
-                                        <input type="text" name="nama_kriteria" id="" class="form-control form-control-sm" autofocus autocomplete="off">
+                                        <input type="text" name="mesin" id="" class="form-control form-control-sm" autofocus autocomplete="off">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Bobot</label>

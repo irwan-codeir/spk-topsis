@@ -13,10 +13,10 @@ if (!isset($_SESSION["login"])) {
 }
 
 
-$bobotAlternatif = mysqli_query($conn, "SELECT * FROM tbl_bobot_alternatif INNER JOIN tbl_alternatif ON id_alt = id");
+$bobotAlternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
 
 if (isset($_POST['submit'])) {
-    if (tambah_bobot_alternatif($_POST) > 0) {
+    if (tambah_alternatif($_POST) > 0) {
         echo "
             <script>
                 alert('data berhasil ditambahkan!');
@@ -94,8 +94,8 @@ if (isset($_POST['submit'])) {
                                         <td><?= $alt['k04']; ?></td>
                                         <td><?= $alt['k05']; ?></td>
                                         <td>
-                                            <a href="#" class="badge badge-warning" data-toggle="modal" data-target="#editModal<?= $alt['id_alt']; ?>">Edit</a>
-                                            <a href="hapus-bobot-alternatif.php?id=<?= $alt['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
+                                            <a href="edit-alternatif.php?id=<?= $alt['id_alt']; ?>" class="badge badge-warning">Edit</a>
+                                            <a href="hapus-alternatif.php?id=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -114,23 +114,41 @@ if (isset($_POST['submit'])) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Bobot Alternatif</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data & Bobot Alternatif</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-10 offset-1">
-                        <form action="" method="post">
-                            <!-- <div class="row">
-                                <div class="col">
+                    <div class="col-md">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Kode Alt</label>
-                                        <input type="text" class="form-control" name="kode_alt" value="<?= $kodeData; ?>">
+                                        <label for="exampleFormControlInput1">Kode</label>
+                                        <input type="text" class="form-control" name="kode_alt" placeholder="cth: K01 ">
                                     </div>
                                 </div>
-                            </div> -->
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Alternatif</label>
+                                        <input type="text" class="form-control" name="alternatif">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Upload Image Alternatif</label>
+                                <input type="file" class="form-control-file" name="gambar" id="gambar">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">URL</label>
+                                <input type="text" class="form-control" name="url" id="url" placeholder="https://codeir-irwan.blogspot.com/" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Website SEO</label>
+                                <input type="text" class="form-control" name="website_seo" id="website_seo">
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">

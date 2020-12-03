@@ -12,6 +12,7 @@ if (!isset($_SESSION["login"])) {
 }
 
 $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
+$data = mysqli_fetch_assoc($admin);
 
 if (isset($_POST['submit'])) {
     if (tambah_admin($_POST) > 0) {
@@ -93,7 +94,7 @@ if (isset($_GET['cari'])) {
                                         <td><?= $adm['username']; ?></td>
                                         <!-- <td><?= $adm['password']; ?></td> -->
                                         <td>
-                                            <a href="edit-data-admin.php?id=<?= $adm['id']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
+                                            <a href="#" class="badge badge-success editBtn">Edit</a>
                                             <a href="hapus-admin.php?id=<?= $adm['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
                                         </td>
                                     </tr>
@@ -106,6 +107,57 @@ if (isset($_GET['cari'])) {
         </div>
     </div>
     <!-- data admin Table end -->
+</div>
+
+<!-- modal edit admin -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Admin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10 offset-1">
+                        <form action="edit-data-admin.php" method="post" enctype="multipart/form-data">
+
+                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="fotoLama" id="foto">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="">Nama</label>
+                                        <input type="text" name="nama" id="nama" class="form-control form-control-sm" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Username</label>
+                                        <input type="text" name="username" id="username" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Password</label>
+                                        <input type="password" name="password" id="password" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Upload Foto</label>
+                                        <!-- <img src="assets/img/<?= $row['foto']; ?>" alt="<?= $row['foto']; ?>" width="80"> -->
+                                        <input type="file" class="form-control-file" name="foto" id="foto">
+                                    </div>
+
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- modal tambah admin -->

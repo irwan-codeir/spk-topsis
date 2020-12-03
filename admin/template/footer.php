@@ -7,14 +7,6 @@
   <!-- footer area end-->
   </div>
 
-  <script>
-      $('#dataAdmin').on('show.bs.modal', event => {
-          var button = $(event.relatedTarget);
-          var modal = $(this);
-          // Use above variables to manipulate the DOM
-
-      });
-  </script>
 
 
   <!-- jquery latest version -->
@@ -59,6 +51,36 @@
   <!-- others plugins -->
   <script src="./assets/js/plugins.js"></script>
   <script src="./assets/js/scripts.js"></script>
+
+  <script>
+      $('#dataAdmin').on('show.bs.modal', event => {
+          var button = $(event.relatedTarget);
+          var modal = $(this);
+          // Use above variables to manipulate the DOM
+
+      });
+
+      $(document).ready(function() {
+          $('.editBtn').on('click', function() {
+              $('#editModal').modal('show');
+
+              $tr = $(this).closest('tr');
+
+              var data = $tr.children("td").map(function() {
+                  return $(this).text();
+              }).get();
+
+              console.log(data);
+
+              $('#id').val(data[0]);
+              $('#nama').val(data[1]);
+              $('#username').val(data[2]);
+              $('#password').val(data[3]);
+              $('#foto').val(data[4]);
+          });
+      });
+  </script>
+
   </body>
 
   </html>

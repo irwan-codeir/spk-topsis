@@ -14,6 +14,7 @@ if (!isset($_SESSION["login"])) {
 
 $alternatif = mysqli_query($conn, "SELECT * FROM tbl_alternatif");
 
+
 if (isset($_POST['submit'])) {
     if (tambah_alternatif($_POST) > 0) {
         // redirect dan alert dari javascript
@@ -51,9 +52,9 @@ if (isset($_GET['cari'])) {
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title text-center">Data Alternatif</h4>
-                <button type="button" name="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
+                <!-- <button type="button" name="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
                     Input
-                </button>
+                </button> -->
                 <form class="form-group float-right" action="" method="get">
                     <div class="input-group mb-2">
                         <input type="text" name="keyword" class="form-control" placeholder="Search" autofocus autocomplete="off">
@@ -73,7 +74,6 @@ if (isset($_GET['cari'])) {
                                     <th scope="col">Image</th>
                                     <th scope="col">URL</th>
                                     <th scope="col">Website</th>
-                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,10 +88,6 @@ if (isset($_GET['cari'])) {
                                         </td>
                                         <td><?= $alt['website']; ?></td>
                                         <td><?= $alt['website_seo']; ?></td>
-                                        <td>
-                                            <a href="edit.php?id=<?= $alt['id_alt']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
-                                            <a href="hapus-alternatif.php?id=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
-                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

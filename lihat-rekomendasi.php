@@ -19,7 +19,7 @@ foreach ($a2 as $a) {
 }
 
 
-$result = mysqli_query($conn, "SELECT * FROM tbl_pengunjung ORDER BY id DESC limit 1");
+$result = mysqli_query($conn, "SELECT * FROM tbl_visitor ORDER BY id DESC limit 1");
 $k = mysqli_fetch_assoc($result);
 
 // var_dump($k);
