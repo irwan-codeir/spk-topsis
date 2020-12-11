@@ -130,7 +130,7 @@ if (isset($_POST['submit_harga'])) {
             <div class="col-lg-6 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title float-left">Kriteria Bobot</h4>
+                        <h4 class="header-title float-left">Nilai Kriteria</h4>
                         <button type="button" name="submit" class="btn btn-primary btn-sm float-right mb-2" data-toggle="modal" data-target="#tambahKriteriaBobot">
                             Input
                         </button>
@@ -140,8 +140,8 @@ if (isset($_POST['submit_harga'])) {
                                     <thead class="text-uppercase">
                                         <tr>
                                             <th scope="col">NO</th>
-                                            <th scope="col">Kriteria</th>
-                                            <th scope="col">Bobot</th>
+                                            <th scope="col">Derajat Kepentingan</th>
+                                            <th scope="col">Nilai</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
