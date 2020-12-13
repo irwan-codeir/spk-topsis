@@ -1,9 +1,9 @@
-<?php $title = "Data Hasil Topsis"; ?>
-<?php include "template/header.php"; ?>
-<?php include "template/sidebar.php"; ?>
-
 <?php
 session_start();
+$title = "Data Hasil Topsis";
+include "template/header.php";
+include "template/sidebar.php";
+
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {
@@ -12,16 +12,16 @@ if (!isset($_SESSION["login"])) {
 }
 
 // konfigurasi pagination
-$visitor = mysqli_query($conn, "SELECT * FROM tbl_visitor");
-$row = mysqli_fetch_row($visitor);
-$jumlahDataPerhalaman = 5;
-$jumlahData = count($row);
-// var_dump($jumlahData);
-// die;
-$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
-$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
-$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
-$visitors = mysqli_query($conn, "SELECT * FROM tbl_visitor LIMIT $awalData, $jumlahDataPerhalaman");
+$visitor = mysqli_query($conn, "SELECT * FROM tbl_visitor ORDER BY date DESC");
+// $row = mysqli_fetch_row($visitor);
+// $jumlahDataPerhalaman = 5;
+// $jumlahData = count($row);
+// // var_dump($jumlahData);
+// // die;
+// $jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+// $halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+// $awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman;
+// $visitors = mysqli_query($conn, "SELECT * FROM tbl_visitor LIMIT $awalData, $jumlahDataPerhalaman");
 
 // $pengunjung = mysqli_query($conn, "SELECT * FROM tbl_pengunjung ORDER BY id DESC");
 
@@ -44,7 +44,7 @@ $visitors = mysqli_query($conn, "SELECT * FROM tbl_visitor LIMIT $awalData, $jum
                             <thead class="text-uppercase">
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Nama</th>
+                                    <th scope="col">Visitor</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Kriteria Yang DiPilih</th>
 
@@ -52,8 +52,8 @@ $visitors = mysqli_query($conn, "SELECT * FROM tbl_visitor LIMIT $awalData, $jum
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = $awalData + 1; ?>
-                                <?php foreach ($visitors as $hsl) : ?>
+                                <?php $i = 1; ?>
+                                <?php foreach ($visitor as $hsl) : ?>
                                     <tr>
                                         <th scope="row"><?= $i++; ?></th>
                                         <td><?= $hsl['nama']; ?></td>
@@ -114,7 +114,7 @@ $visitors = mysqli_query($conn, "SELECT * FROM tbl_visitor LIMIT $awalData, $jum
                     </div>
                 </div>
                 <!-- pagination -->
-                <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4">
+                <!-- <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4">
                     <ul class="pagination">
                         <?php if ($halamanAktif > 1) : ?>
                             <li class="page-item">
@@ -140,7 +140,7 @@ $visitors = mysqli_query($conn, "SELECT * FROM tbl_visitor LIMIT $awalData, $jum
                             </li>
                         <?php endif; ?>
                     </ul>
-                </nav>
+                </nav> -->
                 <!-- end pagination -->
             </div>
         </div>

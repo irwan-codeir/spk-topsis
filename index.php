@@ -33,14 +33,14 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="container">
-    <div class="row content mb-5">
+    <div class="row content">
         <div class="col-12 fullscreen-bg">
             <video style="margin-left: -115px;" class="bg-video" loop controls autoplay muted>
                 <source src="assets/video/car.mp4" type="video/mp4">
             </video>
             <h1>Oto<span>Expert</span></h1>
             <div class="row d-flex justify-content-end">
-                <div class="bg-jumbotron pt-3 pb-5 pl-4 pr-4 text-center bg-light">
+                <div class="bg-jumbotron pt-3 pb-3 pl-4 pr-4 text-center bg-light">
                     <h3>Dapatkan Rekomendasi Mobil MPV <br>terbaik, dengan mengisi form dibawah <br>ini!</h3>
                     <form action="" method="post">
                         <div class="form-group">
@@ -90,14 +90,14 @@ if (isset($_POST['submit'])) {
                             </select>
                         </div>
                         <input type="hidden" name="date" value="<?= date('Y-m-d'); ?>">
-                        <!-- <div class="form-group">
-                    <select id="harga" class="form-control form-control-sm">
-                        <option selected>-- Pilih Warna --</option>
-                        <option value="1">Putih</option>
-                        <option value="3">Hitam</option>
-                        <option value="5">Warna Lain</option>
-                    </select>
-                </div> -->
+                        <div class="form-group">
+                            <select id="harga" class="form-control form-control-sm">
+                                <option selected>-- Pilih Warna --</option>
+                                <option value="1">Putih</option>
+                                <option value="3">Hitam</option>
+                                <option value="5">Warna Lain</option>
+                            </select>
+                        </div>
                         <button type="submit" name="submit" class="btn btn-block btn-warning text-white rounded mt-4">Lihat Rekomendasi</button>
                         <!-- <button type="button" class="btn btn-block btn-warning text-white rounded mt-4" data-toggle="modal" data-target="#sendModal">Lihat Rekomendasi</button> -->
                     </form>

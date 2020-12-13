@@ -1,9 +1,9 @@
-<?php $title = "Data Admin"; ?>
-<?php include "template/header.php"; ?>
-<?php include "template/sidebar.php"; ?>
-
 <?php
 session_start();
+$title = "Data Admin";
+include "template/header.php";
+include "template/sidebar.php";
+
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {

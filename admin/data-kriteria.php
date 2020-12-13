@@ -1,10 +1,9 @@
-<?php $title = "Data Kriteria"; ?>
-<?php include "template/header.php"; ?>
-<?php include "template/sidebar.php"; ?>
-
 <?php
-
 session_start();
+$title = "Data Kriteria";
+include "template/header.php";
+include "template/sidebar.php";
+
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {

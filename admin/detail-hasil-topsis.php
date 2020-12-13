@@ -1,9 +1,9 @@
-<?php $title = "Detail Perhitungan Topsis"; ?>
-<?php include "template/header.php"; ?>
-<?php include "template/sidebar.php"; ?>
-
 <?php
 session_start();
+$title = "Detail Perhitungan Topsis";
+include "template/sidebar.php";
+include "template/header.php";
+
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {

@@ -1,10 +1,9 @@
 <?php
-
+session_start();
 $title = "Data Alternatif";
 include "template/header.php";
 include "template/sidebar.php";
 
-session_start();
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {

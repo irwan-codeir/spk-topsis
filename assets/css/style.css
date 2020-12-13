@@ -38,6 +38,11 @@ body {
   height: 100%;
 }
 
+/*------------------------- dashboard Css -------------------*/
+.dashboard-visitor {
+  font-size: 48px;
+}
+
 /* navbar */
 /* .navbar {
   box-shadow: 0 0 2px;
