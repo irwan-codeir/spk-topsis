@@ -29,7 +29,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
     <div class="col-12 mt-2">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title text-center">Detail Hasil Topsis</h4>
+                <h4 class="header-title text-center">Detail Hasil Perhitungan Topsis</h4>
                 <!-- <p class="d"><a href="print-hasil.php"><i class="fa fa-print"></i> Print</a></p> -->
                 <!-- <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -56,6 +56,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                         <th scope="col">K03</th>
                                         <th scope="col">K04</th>
                                         <th scope="col">K05</th>
+                                        <th scope="col">K06</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +68,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                             <td><?= $alt['k03']; ?></td>
                                             <td><?= $alt['k04']; ?></td>
                                             <td><?= $alt['k05']; ?></td>
+                                            <td><?= $alt['k06']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -75,7 +77,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                     </div>
                 </div>
                 <?php
-                $a2 = mysqli_query($conn, "SELECT SUM(pow(k01, 2)) AS total1, SUM(pow(k02, 2)) AS total2, SUM(pow(k03, 2)) AS total3, SUM(pow(k04, 2)) AS total4, SUM(pow(k05, 2)) AS total5 FROM tbl_alternatif");
+                $a2 = mysqli_query($conn, "SELECT SUM(pow(k01, 2)) AS total1, SUM(pow(k02, 2)) AS total2, SUM(pow(k03, 2)) AS total3, SUM(pow(k04, 2)) AS total4, SUM(pow(k05, 2)) AS total5, SUM(pow(k06, 2)) AS total6 FROM tbl_alternatif");
                 ?>
                 <!-- menghitung jumlah sum masing2 alternatif -->
                 <?php foreach ($a2 as $a) : ?>
@@ -84,6 +86,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                     <?php $sum3 = $a['total3']; ?>
                     <?php $sum4 = $a['total4']; ?>
                     <?php $sum5 = $a['total5']; ?>
+                    <?php $sum6 = $a['total6']; ?>
 
                 <?php endforeach; ?>
 
@@ -100,6 +103,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                         <th scope="col">K03</th>
                                         <th scope="col">K04</th>
                                         <th scope="col">K05</th>
+                                        <th scope="col">K06</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,6 +115,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                             <td><?= number_format($a['k03'] / sqrt($sum3), 4); ?></td>
                                             <td><?= number_format($a['k04'] / sqrt($sum4), 4); ?></td>
                                             <td><?= number_format($a['k05'] / sqrt($sum5), 4); ?></td>
+                                            <td><?= number_format($a['k06'] / sqrt($sum6), 4); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -127,6 +132,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                 $kriteria3 = $k['k03'];
                 $kriteria4 = $k['k04'];
                 $kriteria5 = $k['k05'];
+                $kriteria6 = $k['k06'];
 
                 // $result = mysqli_query($conn, "SELECT * FROM karyawan WHERE id = $id");
                 // $k = mysqli_fetch_assoc($result);
@@ -144,6 +150,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                         <th scope="col">K03</th>
                                         <th scope="col">K04</th>
                                         <th scope="col">K05</th>
+                                        <th scope="col">K06</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -156,6 +163,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                             <td><?= number_format(($a['k03'] / sqrt($sum3)) * $kriteria3, 4); ?></td>
                                             <td><?= number_format(($a['k04'] / sqrt($sum4)) * $kriteria4, 4); ?></td>
                                             <td><?= number_format(($a['k05'] / sqrt($sum5)) * $kriteria5, 4); ?></td>
+                                            <td><?= number_format(($a['k06'] / sqrt($sum6)) * $kriteria6, 4); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -179,7 +187,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                 <tbody>
                                     <!-- menentukan max dan min -->
                                     <?php
-                                    $query = mysqli_query($conn, "SELECT max(k01) as max1, min(k01) as min1, max(k02) as max2, min(k02) as min2, max(k03) as max3, min(k03) as min3, max(k04) as max4, min(k04) as min4, max(k05) as max5, min(k05) as min5 FROM tbl_alternatif");
+                                    $query = mysqli_query($conn, "SELECT max(k01) as max1, min(k01) as min1, max(k02) as max2, min(k02) as min2, max(k03) as max3, min(k03) as min3, max(k04) as max4, min(k04) as min4, max(k05) as max5, min(k05) as min5, max(k06) as max6, min(k06) as min6 FROM tbl_alternatif");
                                     ?>
 
 
@@ -237,6 +245,16 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                             <th><?= number_format(($q['min5'] / sqrt($sum5)) * $kriteria5, 4); ?></th>
                                         <?php endforeach; ?>
                                     </tr>
+                                    <tr>
+                                        <th>Y6</th>
+                                        <?php foreach ($alternatif as $a) : ?>
+                                            <td><?= number_format(($a['k06'] / sqrt($sum6)) * $kriteria6, 4); ?></td>
+                                        <?php endforeach; ?>
+                                        <?php foreach ($query as $q) : ?>
+                                            <th><?= number_format(($q['max6'] / sqrt($sum6)) * $kriteria6, 4); ?></th>
+                                            <th><?= number_format(($q['min6'] / sqrt($sum6)) * $kriteria6, 4); ?></th>
+                                        <?php endforeach; ?>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -263,6 +281,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                                 $maksimal3 = ($a['max3'] / sqrt($sum3)) * $kriteria3;
                                                 $maksimal4 = ($a['max4'] / sqrt($sum4)) * $kriteria4;
                                                 $maksimal5 = ($a['max5'] / sqrt($sum5)) * $kriteria5;
+                                                $maksimal6 = ($a['max6'] / sqrt($sum6)) * $kriteria6;
                                                 ?>
 
                                                 <?php foreach ($alternatif as $a) : ?>
@@ -272,8 +291,9 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                                     $y3 = $a['k03'] / sqrt($sum3) * $kriteria3;
                                                     $y4 = $a['k04'] / sqrt($sum4) * $kriteria4;
                                                     $y5 = $a['k05'] / sqrt($sum5) * $kriteria5;
+                                                    $y6 = $a['k06'] / sqrt($sum6) * $kriteria6;
 
-                                                    $dPositif = number_format(sqrt(pow(($maksimal1 - $y1), 2) + pow(($maksimal2 - $y2), 2) + pow(($maksimal3 - $y3), 2) + pow(($maksimal4 - $y4), 2) + pow(($maksimal5 - $y5), 2)), 4);
+                                                    $dPositif = number_format(sqrt(pow(($maksimal1 - $y1), 2) + pow(($maksimal2 - $y2), 2) + pow(($maksimal3 - $y3), 2) + pow(($maksimal4 - $y4), 2) + pow(($maksimal5 - $y5), 2) + pow(($maksimal6 - $y6), 2)), 4);
                                                     ?>
 
                                                     <tr>
@@ -306,6 +326,7 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                                 $minimal3 = ($a['min3'] / sqrt($sum3)) * $kriteria3;
                                                 $minimal4 = ($a['min4'] / sqrt($sum4)) * $kriteria4;
                                                 $minimal5 = ($a['min5'] / sqrt($sum5)) * $kriteria5;
+                                                $minimal6 = ($a['min5'] / sqrt($sum6)) * $kriteria6;
                                                 ?>
 
                                                 <?php foreach ($alternatif as $a) : ?>
@@ -315,10 +336,11 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                                     $y3 = $a['k03'] / sqrt($sum3) * $kriteria3;
                                                     $y4 = $a['k04'] / sqrt($sum4) * $kriteria4;
                                                     $y5 = $a['k05'] / sqrt($sum5) * $kriteria5;
+                                                    $y6 = $a['k06'] / sqrt($sum6) * $kriteria6;
 
 
 
-                                                    $dNegatif = number_format(sqrt(pow(($minimal1 - $y1), 2) + pow(($minimal2 - $y2), 2) + pow(($minimal3 - $y3), 2) + pow(($minimal4 - $y4), 2) + pow(($minimal5 - $y5), 2)), 4);
+                                                    $dNegatif = number_format(sqrt(pow(($minimal1 - $y1), 2) + pow(($minimal2 - $y2), 2) + pow(($minimal3 - $y3), 2) + pow(($minimal4 - $y4), 2) + pow(($minimal5 - $y5), 2) + pow(($minimal6 - $y6), 2)), 4);
 
                                                     $pref = $dNegatif / ($dNegatif + $dPositif);
                                                     // echo $pref;
@@ -347,7 +369,10 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                             <table class="table table-sm progress-table text-center">
                                 <thead class="text-uppercase">
                                     <tr>
-                                        <th scope="col" colspan="4">Nilai Preferensi</th>
+                                        <th scope="col">Kode</th>
+                                        <th scope="col">Alternatif</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Nilai Preferensi</th>
                                         <th scope="col">Perangkingan</th>
                                     </tr>
                                 </thead>
@@ -364,12 +389,14 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                         $maksimal3 = ($q['max3'] / sqrt($sum3)) * $kriteria3;
                                         $maksimal4 = ($q['max4'] / sqrt($sum4)) * $kriteria4;
                                         $maksimal5 = ($q['max5'] / sqrt($sum5)) * $kriteria5;
+                                        $maksimal6 = ($q['max6'] / sqrt($sum6)) * $kriteria6;
 
                                         $minimal1 = ($q['min1'] / sqrt($sum1)) * $kriteria1;
                                         $minimal2 = ($q['min2'] / sqrt($sum2)) * $kriteria2;
                                         $minimal3 = ($q['min3'] / sqrt($sum3)) * $kriteria3;
                                         $minimal4 = ($q['min4'] / sqrt($sum4)) * $kriteria4;
                                         $minimal5 = ($q['min5'] / sqrt($sum5)) * $kriteria5;
+                                        $minimal6 = ($q['min6'] / sqrt($sum6)) * $kriteria6;
                                         ?>
 
                                         <?php foreach ($alternatif as $a) : ?>
@@ -379,10 +406,11 @@ mysqli_query($conn, "TRUNCATE TABLE tbl_preferensi");
                                             $y3 = $a['k03'] / sqrt($sum3) * $kriteria3;
                                             $y4 = $a['k04'] / sqrt($sum4) * $kriteria4;
                                             $y5 = $a['k05'] / sqrt($sum5) * $kriteria5;
+                                            $y6 = $a['k06'] / sqrt($sum6) * $kriteria6;
 
-                                            $dPositif = number_format(sqrt(pow(($maksimal1 - $y1), 2) + pow(($maksimal2 - $y2), 2) + pow(($maksimal3 - $y3), 2) + pow(($maksimal4 - $y4), 2) + pow(($maksimal5 - $y5), 2)), 4);
+                                            $dPositif = number_format(sqrt(pow(($maksimal1 - $y1), 2) + pow(($maksimal2 - $y2), 2) + pow(($maksimal3 - $y3), 2) + pow(($maksimal4 - $y4), 2) + pow(($maksimal5 - $y5), 2) + pow(($maksimal6 - $y6), 2)), 4);
 
-                                            $dNegatif = number_format(sqrt(pow(($minimal1 - $y1), 2) + pow(($minimal2 - $y2), 2) + pow(($minimal3 - $y3), 2) + pow(($minimal4 - $y4), 2) + pow(($minimal5 - $y5), 2)), 4);
+                                            $dNegatif = number_format(sqrt(pow(($minimal1 - $y1), 2) + pow(($minimal2 - $y2), 2) + pow(($minimal3 - $y3), 2) + pow(($minimal4 - $y4), 2) + pow(($minimal5 - $y5), 2) + pow(($minimal6 - $y6), 2)), 4);
 
                                             $pref = $dNegatif / ($dNegatif + $dPositif);
 

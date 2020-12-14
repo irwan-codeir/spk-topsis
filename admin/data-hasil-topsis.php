@@ -11,8 +11,14 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
-// konfigurasi pagination
 $visitor = mysqli_query($conn, "SELECT * FROM tbl_visitor ORDER BY date DESC");
+
+// jika tombol cari diklik
+if (isset($_GET['cari'])) {
+    $visitor = cari_visitor($_GET['keyword']);
+}
+
+// konfigurasi pagination
 // $row = mysqli_fetch_row($visitor);
 // $jumlahDataPerhalaman = 5;
 // $jumlahData = count($row);
@@ -37,7 +43,22 @@ $visitor = mysqli_query($conn, "SELECT * FROM tbl_visitor ORDER BY date DESC");
     <div class="col-12 mt-2">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title">Data Hasil Topsis</h4>
+                <div class="row">
+                    <div class="col-md-6 mt-2">
+                        <h4 class="header-title">Data Hasil Topsis</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <form class="form-group float-right" action="" method="get">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="keyword" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-transparent" type="submit" name="cari">Go</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="single-table">
                     <div class="table-responsive">
                         <table class="table table-hover progress-table text-center">
@@ -46,9 +67,9 @@ $visitor = mysqli_query($conn, "SELECT * FROM tbl_visitor ORDER BY date DESC");
                                     <th scope="col">No</th>
                                     <th scope="col">Visitor</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Kriteria Yang DiPilih</th>
+                                    <th scope="col">Bobot Kriteria Yang DiPilih</th>
 
-                                    <th scope="col">Detail Hasil</th>
+                                    <th scope="col">Detail Perhitungan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,6 +120,14 @@ $visitor = mysqli_query($conn, "SELECT * FROM tbl_visitor ORDER BY date DESC");
                                                         </div>
                                                         <div class="col">
                                                             : <?= $hsl['k05']; ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            Warna
+                                                        </div>
+                                                        <div class="col">
+                                                            : <?= $hsl['k06']; ?>
                                                         </div>
                                                     </div>
                                                 </li>

@@ -110,9 +110,19 @@ $rows = mysqli_fetch_assoc($alternatif);
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="exampleFormControlInput1">K05 (Mesin)</label>
-								<input type="number" class="form-control" name="k05" value="<?= $rows['k05']; ?>">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleFormControlInput1">K05 (Mesin)</label>
+										<input type="number" class="form-control" name="k05" value="<?= $rows['k05']; ?>">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleFormControlInput1">K06 (Warna)</label>
+										<input type="number" class="form-control" name="k06" value="<?= $rows['k06']; ?>">
+									</div>
+								</div>
 							</div>
 					</div>
 				</div>

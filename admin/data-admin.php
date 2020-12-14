@@ -1,15 +1,16 @@
 <?php
 session_start();
-$title = "Data Admin";
-include "template/header.php";
-include "template/sidebar.php";
-
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
 }
+
+$title = "Data Admin";
+include "template/header.php";
+include "template/sidebar.php";
+
 
 $admin = mysqli_query($conn, "SELECT * FROM tbl_admin");
 $data = mysqli_fetch_assoc($admin);

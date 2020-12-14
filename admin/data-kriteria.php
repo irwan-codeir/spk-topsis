@@ -79,8 +79,8 @@ if (isset($_GET['cari'])) {
                                         <td><?= $kr['kode_krt']; ?></td>
                                         <td><?= $kr['nama_krt']; ?></td>
                                         <td>
-                                            <a href="edit.php?id=<?= $kr['id']; ?>" class="badge badge-warning" data-toggle="modal" data-target="#editModal">Edit</a>
-                                            <a href="hapus.php?id=<?= $kr['id']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
+                                            <a href="#" class="badge badge-success edit">Edit</a>
+                                            <a href="hapus-kriteria.php?id=<?= $kr['id_krt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -94,7 +94,7 @@ if (isset($_GET['cari'])) {
     <!-- data admin Table end -->
 </div>
 
-<!-- modal tambah alternatif -->
+<!-- modal tambah kriteria -->
 <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -120,15 +120,7 @@ if (isset($_GET['cari'])) {
                                 <div class="col-md">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Nama Kriteria</label>
-                                        <input type="text" class="form-control" name="alternatif" placeholder="" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1">Bobot</label>
-                                        <input type="number" class="form-control" name="bobot" placeholder="" required>
+                                        <input type="text" class="form-control" name="kriteria" placeholder="" required>
                                     </div>
                                 </div>
                             </div>
@@ -137,6 +129,49 @@ if (isset($_GET['cari'])) {
             </div>
             <div class="modal-footer">
                 <button type="submit" name="submit" class="btn btn-primary">Tambah Data</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- modal edit kriteria -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Data Kriteria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10 offset-1">
+                        <form action="edit-data-kriteria.php" method="post">
+                            <div class="row">
+                                <input type="hidden" name="id" id="id">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="">Kode</label>
+                                        <input type="text" class="form-control" name="id" id="id" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Nama Kriteria</label>
+                                        <input type="text" class="form-control" name="kriteria" id="kriteria" required>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="submit" class="btn btn-primary">Edit Data</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
             </form>

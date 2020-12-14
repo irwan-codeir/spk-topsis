@@ -28,13 +28,14 @@ function tambah_visitor($data)
 	$k03 = $data['k03'];
 	$k04 = $data['k04'];
 	$k05 = $data['k05'];
+	$k05 = $data['k06'];
 	$tgl = $data['date'];
 
 
 	// query insert data
 	$query = "INSERT INTO tbl_visitor
 				VALUES
-				('','$nama','$email','$k01','$k02','$k03','$k04','$k05','$tgl')
+				('','$nama','$email','$k01','$k02','$k03','$k04','$k05','$k06','$tgl')
 				";
 	mysqli_query($conn, $query);
 
@@ -67,8 +68,8 @@ function tambah_kriteria($data)
 	global $conn;
 
 	// ambil data dari tiap elemen dalam form / dari name
-	$kode = $data['kode_krt'];
-	$kriteria = $data['nama_krt'];
+	$kode = $data['kode'];
+	$kriteria = $data['kriteria'];
 
 	// query insert data
 	$query = "INSERT INTO tbl_kriteria
@@ -84,7 +85,7 @@ function hapus_kriteria($id)
 {
 	global $conn;
 
-	mysqli_query($conn, "DELETE FROM tbl_kriteri WHERE id_krt = $id");
+	mysqli_query($conn, "DELETE FROM tbl_kriteria WHERE id_krt = $id");
 	return mysqli_affected_rows($conn);
 }
 

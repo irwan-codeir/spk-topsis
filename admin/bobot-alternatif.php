@@ -75,6 +75,7 @@ if (isset($_POST['submit'])) {
                                     <th scope="col">K03</th>
                                     <th scope="col">K04</th>
                                     <th scope="col">K05</th>
+                                    <th scope="col">K06</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -90,6 +91,7 @@ if (isset($_POST['submit'])) {
                                         <td><?= $alt['k03']; ?></td>
                                         <td><?= $alt['k04']; ?></td>
                                         <td><?= $alt['k05']; ?></td>
+                                        <td><?= $alt['k06']; ?></td>
                                         <td>
                                             <a href="edit-alternatif.php?id=<?= $alt['id_alt']; ?>" class="badge badge-warning">Edit</a>
                                             <a href="hapus-alternatif.php?id=<?= $alt['id_alt']; ?>" class="badge badge-danger" onclick="return confirm('apakah anda ingin hapus!');">Hapus</a>
@@ -174,9 +176,19 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">K05 (Mesin)</label>
-                                <input type="number" class="form-control" name="k05" placeholder="">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">K05 (Mesin)</label>
+                                        <input type="number" class="form-control" name="k05" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">K06 (Mesin)</label>
+                                        <input type="number" class="form-control" name="k06" placeholder="">
+                                    </div>
+                                </div>
                             </div>
                     </div>
                 </div>
