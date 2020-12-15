@@ -23,23 +23,6 @@
     <link rel="stylesheet" href="./assets/css/responsive.css">
     <!-- modernizr css -->
     <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
-    <style>
-        /*------------------------- dashboard Css -------------------*/
-        .dashboard-visitor {
-            background-color: aquamarine;
-            height: 60px;
-            width: 60px;
-            border-radius: 40px;
-            box-shadow: 2px 2px 5px black;
-        }
-
-        .dashboard-visitor h1 {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: grey;
-            text-align: center;
-            padding-top: 4px;
-        }
-    </style>
 </head>
 
 <body>

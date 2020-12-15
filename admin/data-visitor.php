@@ -1,9 +1,10 @@
-<?php
-session_start();
-$title = "Data Visitor";
-include "template/header.php";
-include "template/sidebar.php";
+<?php $title = "Data Visitor"; ?>
+<?php include "template/header.php"; ?>
+<?php include "template/sidebar.php"; ?>
 
+<?php
+
+session_start();
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {

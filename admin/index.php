@@ -1,9 +1,9 @@
+<?php $title = "Dashboard"; ?>
+<?php include "template/header.php"; ?>
+<?php include "template/sidebar.php"; ?>
 <?php
-session_start();
-$title = "Dashboard";
-include "template/header.php";
-include "template/sidebar.php";
 
+session_start();
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {
@@ -30,20 +30,8 @@ if (!isset($_SESSION["login"])) {
                         <div class="card">
                             <div class="seo-fact sbg3">
                                 <div class="p-4 d-flex justify-content-between align-items-center">
-                                    <div class="seofct-icon">Data Visitor</div>
-                                    <?php
-                                    $query = mysqli_query($conn, "SELECT Count(*) FROM tbl_visitor");
-                                    $visitor = mysqli_fetch_assoc($query);
-                                    ?>
-                                    <div class="dashboard-visitor">
-                                        <h1>
-                                            <?php
-                                            foreach ($visitor as $visit) {
-                                                echo $visit;
-                                            }
-                                            ?>
-                                        </h1>
-                                    </div>
+                                    <div class="seofct-icon">Visitor</div>
+                                    <canvas id="seolinechart3" height="60"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -53,19 +41,7 @@ if (!isset($_SESSION["login"])) {
                             <div class="seo-fact sbg4">
                                 <div class="p-4 d-flex justify-content-between align-items-center">
                                     <div class="seofct-icon">Data Admin</div>
-                                    <?php
-                                    $query = mysqli_query($conn, "SELECT Count(*) FROM tbl_admin");
-                                    $admin = mysqli_fetch_assoc($query);
-                                    ?>
-                                    <div class="dashboard-visitor">
-                                        <h1>
-                                            <?php
-                                            foreach ($admin as $adm) {
-                                                echo $adm;
-                                            }
-                                            ?>
-                                        </h1>
-                                    </div>
+                                    <canvas id="seolinechart4" height="60"></canvas>
                                 </div>
                             </div>
                         </div>

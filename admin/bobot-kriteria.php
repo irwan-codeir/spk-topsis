@@ -1,9 +1,8 @@
+<?php $title = "Bobot Masing-Masing Kriteria"; ?>
+<?php include "template/header.php"; ?>
+<?php include "template/sidebar.php"; ?>
 <?php
 session_start();
-$title = "Bobot Masing-Masing Kriteria";
-include "template/header.php";
-include "template/sidebar.php";
-
 require "../functions.php";
 
 if (!isset($_SESSION["login"])) {
@@ -98,22 +97,6 @@ if (isset($_POST['submit_harga'])) {
                 document.location.href = 'bobot-kriteria.php';
             </script>
          ";
-    }
-} elseif (isset($_POST['submit_warna'])) {
-    if (tambah_bobot_kriteria_warna($_POST) > 0) {
-        echo "
-			<script>
-				alert('data Berhasil ditambah');
-				document.location.href = 'bobot-kriteria.php';
-			</script>
-        ";
-    } else {
-        echo "
-			<script>
-				alert('data gagal ditambah');
-				document.location.href = 'bobot-kriteria.php';
-			</script>
-        ";
     }
 } elseif (isset($_POST['submit_kriteria'])) {
     if (tambah_bobot_kriteria($_POST) > 0) {
@@ -379,44 +362,7 @@ if (isset($_POST['submit_harga'])) {
                     </div>
                 </div>
             </div>
-            <!-- Bobot Kriteria Warna-->
-            <div class="col-lg-6 mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title float-left">Bobot Kriteria Warna</h4>
-                        <button type="button" name="submit" class="btn btn-primary btn-sm float-right mb-2" data-toggle="modal" data-target="#tambahPenumpang">
-                            Input
-                        </button>
-                        <div class="single-table">
-                            <div class="table-responsive">
-                                <table class="table table-hover text-center">
-                                    <thead class="text-uppercase">
-                                        <tr>
-                                            <th scope="col">NO</th>
-                                            <th scope="col">Warna</th>
-                                            <th scope="col">Bobot</th>
-                                            <th scope="col">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $i = 1; ?>
-                                        <?php foreach ($warna as $p) : ?>
-                                            <tr>
-                                                <th scope="row"><?= $i++; ?></th>
-                                                <td><?= $p['warna']; ?></td>
-                                                <td><?= $p['bobot']; ?></td>
-                                                <td>
-                                                    <a href="hapus-kriteria-warna.php?id=<?= $p['id_warna']; ?>" onclick="return confirm('apakah anda ingin hapus!');"><i class="ti-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Mesin Hoverable Rows Table end -->
         </div>
     </div>
     <!-- main content area end -->
@@ -630,44 +576,6 @@ if (isset($_POST['submit_harga'])) {
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Mesin</label>
-                                        <input type="text" name="mesin" id="" class="form-control form-control-sm" autofocus autocomplete="off">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Bobot</label>
-                                        <input type="number" name="bobot" id="" class="form-control form-control-sm" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="submit_mesin" class="btn btn-primary">Tambah Data</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- modal tambah  Bobot Kriteria Mesin-->
-<div class="modal fade" id="tambahWarna" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Bobot Kriteria Mesin</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-10 offset-1">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="">Warna</label>
                                         <input type="text" name="mesin" id="" class="form-control form-control-sm" autofocus autocomplete="off">
                                     </div>
                                     <div class="form-group">
